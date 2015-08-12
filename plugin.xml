@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.homerours.musiccontrols"
+    version="1.0.0">
+    <name>MusicControls</name>
+    <description>Controls music via notifications</description>
+    <license>MIT</license>
+
+    <engines>
+        <engine name="cordova" version=">=3.4.0"/>
+    </engines>
+
+    <asset src="www/MusicControls.js" target="js/MusicControls.js"/>
+
+    <js-module src="www/MusicControls.js" name="MusicControls">
+        <clobbers target="MusicControls" />
+    </js-module>
+
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="MusicControls" >
+                <param name="android-package" value="com.homerours.musiccontrols.MusicControls"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+        </config-file>
+
+        <lib-file src="libs/android/android-support-v4.jar" />
+
+        <source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />
+        <source-file src="src/android/MusicControlsBroadcastReceiver.java" target-dir="src/com/homerours/musiccontrols" />
+        <source-file src="src/android/MusicControlsNotification.java" target-dir="src/com/homerours/musiccontrols" />
+    </platform>
+
+</plugin>

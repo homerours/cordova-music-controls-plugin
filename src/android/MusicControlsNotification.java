@@ -93,7 +93,8 @@ public class MusicControlsNotification {
         Log.v("MusicControls","Update notification");
         NotificationCompat.Builder builder = this.createBuilder(artist,song,imageNativeURL, isPlaying);
         Notification noti = builder.build();
-        noti.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
+        // Flags to make this notification permanent
+        //noti.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
         this.notificationManager.notify(0, noti);
     }
 

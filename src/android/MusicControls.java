@@ -26,21 +26,24 @@ public class MusicControls extends CordovaPlugin {
     private static final String TAG = "MusicControls";
     private MusicControlsBroadcastReceiver mMessageReceiver = new MusicControlsBroadcastReceiver();
     private MusicControlsNotification notification;
-    private boolean firstLaunch = true;
+
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        final Context context=this.cordova.getActivity().getApplicationContext();
+        final Activity activity=this.cordova.getActivity();
+        Log.v("MUSICCONTROLS","Initialize");
+        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-previous"));
+        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-pause"));
+        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-play"));
+        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-next"));
+        this.notification = new MusicControlsNotification(activity);
+    }
 
     @Override
     public boolean execute(final String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
         final Context context=this.cordova.getActivity().getApplicationContext();
         final Activity activity=this.cordova.getActivity();
-
-        if (this.firstLaunch){
-            this.firstLaunch = false;
-            context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-previous"));
-            context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-pause"));
-            context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-play"));
-            context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-next"));
-            this.notification = new MusicControlsNotification(activity);
-        }
 
         if (action.equals("show")) {
             final JSONObject params = args.getJSONObject(0);
@@ -70,17 +73,18 @@ public class MusicControls extends CordovaPlugin {
         return true;
     }
 
-    //public void onStart() {
-            //Log.v(this.TAG,"start");
-    //}
+    @Override
+    public void onDestroy() {
+        Log.v("MUSICCONTROLS","On destroy");
+        this.notification.cancel();
+        this.mMessageReceiver.stopListening();
+        super.onDestroy();
+    }
 
-    //// Called when the activity is no longer visible to the user.
-    //public void onStop() {
-    //}
-
-    //// The final call you receive before your activity is destroyed.
-    //public void onDestroy() {
-    //}
-
-
+    @Override
+    public void onReset() {
+        Log.v("MUSICCONTROLS","On reset");
+        onDestroy();
+        super.onReset();
+    }
 }

@@ -2,37 +2,43 @@ package com.homerours.musiccontrols;
 
 import org.apache.cordova.CordovaInterface;
 
+import java.util.Random;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.File;
+
 import android.util.Log;
-import android.app.Activity;
+import android.R;
 import android.content.Context;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Build;
-import android.R;
 import android.graphics.BitmapFactory;
-import java.io.BufferedInputStream;
 import android.graphics.Bitmap;
-import java.io.FileInputStream;
-import java.io.File;
 import android.net.Uri;
 
 public class MusicControlsNotification {
     private Activity cordovaActivity;
     private NotificationManager notificationManager;
+    private int notificationID;
 
     public MusicControlsNotification(Activity cordovaActivity){
         Log.v("MusicControls","Create notification");
         this.cordovaActivity = cordovaActivity;
         Context context = cordovaActivity.getApplicationContext();
         this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        Random r = new Random();
+        this.notificationID= r.nextInt(100000);
     }
 
     private Notification.Builder createBuilder(String artist, String song, String imageNativeURL, boolean isPlaying){
         Context context = cordovaActivity.getApplicationContext();
         Notification.Builder builder = new Notification.Builder(context).setContentTitle(song).setContentText(artist);
+        builder.setWhen(0);
 
         // Use the Mediastyle display for lollipop
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -103,11 +109,11 @@ public class MusicControlsNotification {
         Notification noti = builder.build();
         // Flags to make this notification permanent
         //noti.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;
-        this.notificationManager.notify(0, noti);
+        this.notificationManager.notify(this.notificationID, noti);
     }
 
     public void cancel(){
-        this.notificationManager.cancel(0);
+        this.notificationManager.cancel(this.notificationID);
     }
 }
 

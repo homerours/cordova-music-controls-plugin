@@ -4,6 +4,7 @@ Show controls for music playing in the notifications.
 
 ## Supported platforms
 - Android (>= 4.1)
+- For iOS, see [shi11/Remotecontrols](https://github.com/shi11/RemoteControls)
 
 ## Installation
 `cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`
@@ -21,7 +22,7 @@ var data = {
 MusicControls.show(data, onSuccess, onError);
 ```
 
-To listen for next action
+Listen for next action:
 ```javascript
 function listenAction(action) {
     if (action===’music-controls-next’){
@@ -42,4 +43,4 @@ function listenAction(action) {
 MusicControls.listen(listenAction, onSuccess, onError);
 ```
 ## Remarks
-This is my first Cordova plugin, and also my first attempt on Android. This plugin might not be perfect and might not be considered for production.
+This is my first Cordova plugin, and also my first attempt on Android. This plugin might not be perfect and should not be considered for production.

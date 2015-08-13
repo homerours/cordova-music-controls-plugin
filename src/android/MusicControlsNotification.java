@@ -10,7 +10,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
+import android.os.Build;
 import android.R;
 import android.graphics.BitmapFactory;
 import java.io.BufferedInputStream;
@@ -30,9 +30,17 @@ public class MusicControlsNotification {
         this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    private NotificationCompat.Builder createBuilder(String artist, String song, String imageNativeURL, boolean isPlaying){
+    private Notification.Builder createBuilder(String artist, String song, String imageNativeURL, boolean isPlaying){
         Context context = cordovaActivity.getApplicationContext();
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context).setContentTitle(song).setContentText(artist);
+        Notification.Builder builder = new Notification.Builder(context).setContentTitle(song).setContentText(artist);
+
+        // Use the Mediastyle display for lollipop
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion >= android.os.Build.VERSION_CODES.LOLLIPOP){
+            Notification.MediaStyle style = new Notification.MediaStyle();
+            builder.setStyle(style);
+        }
+
         if (isPlaying){
             builder.setSmallIcon(R.drawable.ic_media_play);
         } else {
@@ -61,7 +69,7 @@ public class MusicControlsNotification {
         builder.setContentIntent(resultPendingIntent);
 
 
-        builder.setPriority(NotificationCompat.PRIORITY_HIGH);
+        builder.setPriority(Notification.PRIORITY_HIGH);
 
         // PREVIOUS
         Intent previousIntent = new Intent("music-controls-previous");
@@ -91,7 +99,7 @@ public class MusicControlsNotification {
 
     public void updateNotification(String artist, String song, String imageNativeURL, boolean isPlaying){
         Log.v("MusicControls","Update notification");
-        NotificationCompat.Builder builder = this.createBuilder(artist,song,imageNativeURL, isPlaying);
+        Notification.Builder builder = this.createBuilder(artist,song,imageNativeURL, isPlaying);
         Notification noti = builder.build();
         // Flags to make this notification permanent
         //noti.flags |= Notification.FLAG_NO_CLEAR | Notification.FLAG_ONGOING_EVENT;

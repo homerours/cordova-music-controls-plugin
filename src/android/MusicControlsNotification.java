@@ -2,7 +2,7 @@ package com.homerours.musiccontrols;
 
 import org.apache.cordova.CordovaInterface;
 
-import java.util.Random;
+//import java.util.Random;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.File;
@@ -24,15 +24,15 @@ import android.net.Uri;
 public class MusicControlsNotification {
     private Activity cordovaActivity;
     private NotificationManager notificationManager;
-    private int notificationID;
+    private final int notificationID = 4821;
 
     public MusicControlsNotification(Activity cordovaActivity){
         Log.v("MusicControls","Create notification");
         this.cordovaActivity = cordovaActivity;
         Context context = cordovaActivity.getApplicationContext();
         this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Random r = new Random();
-        this.notificationID= r.nextInt(100000);
+        //Random r = new Random();
+        //this.notificationID= r.nextInt(100000);
     }
 
     private Notification.Builder createBuilder(String artist, String song, String imageNativeURL, boolean isPlaying){

@@ -39,6 +39,7 @@ public class MusicControlsNotification {
         Context context = cordovaActivity.getApplicationContext();
         Notification.Builder builder = new Notification.Builder(context).setContentTitle(song).setContentText(artist);
         builder.setWhen(0);
+        builder.setOngoing(true);
 
         // Use the Mediastyle display for lollipop
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;

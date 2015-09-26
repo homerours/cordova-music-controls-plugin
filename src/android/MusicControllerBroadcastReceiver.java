@@ -1,4 +1,4 @@
-package com.homerours.musiccontrols;
+package com.filfatstudios.musiccontroller;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -10,15 +10,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.content.BroadcastReceiver;
 
-public class MusicControlsBroadcastReceiver extends BroadcastReceiver {
-
+public class MusicControllerBroadcastReceiver extends BroadcastReceiver {
     private CallbackContext cb;
 
-    public MusicControlsBroadcastReceiver(){
+    public MusicControllerBroadcastReceiver(){
+        
     }
-
     public void setCallback(CallbackContext cb){
         this.cb = cb;
+    }
+    public void stopListening(){
+        if (this.cb != null){
+            this.cb.success("stop-listening");
+            this.cb = null;
+        }
     }
 
     @Override
@@ -26,15 +31,7 @@ public class MusicControlsBroadcastReceiver extends BroadcastReceiver {
         if (this.cb != null){
             String message = intent.getAction();
             this.cb.success(message);
-            this.cb=null;
+            this.cb = null;
         }
-    }
-
-    public void stopListening(){
-        if (this.cb != null){
-            this.cb.success("stop-listening");
-            this.cb=null;
-        }
-
     }
 }

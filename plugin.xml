@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="com.filfatstudios.musiccontroller"
-    version="1.0.1">
+    version="1.2.0">
     <name>MusicController</name>
     <description>Interactive multimedia controls</description>
     <license>MIT</license>
 
     <engines>
-        <engine name="cordova" version=">=3.4.0"/>
+        <engine name="cordova" version=">=4.0.0"/>
     </engines>
 
     <asset src="www/MusicController.js" target="js/MusicController.js"/>
@@ -16,7 +16,7 @@
         <clobbers target="MusicController" />
     </js-module>
 
-
+    <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MusicController" >
@@ -32,5 +32,12 @@
         <source-file src="src/android/MusicControllerBroadcastReceiver.java" target-dir="src/com/filfatstudios/musiccontroller" />
         <source-file src="src/android/MusicControllerNotification.java" target-dir="src/com/filfatstudios/musiccontroller" />
     </platform>
+    
+    <!-- windows -->
+  	<platform name="windows">
+    	<js-module src="src/windows/MusicControllerProxy.js" name="MusicControllerProxy">
+    		<merges target="" />
+    	</js-module>
+	</platform>
 
 </plugin>

@@ -1,5 +1,5 @@
 module.exports = {
-    create: function(data,successCallback, errorCallback) {
+    create: function(data, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, 'MusicController', 'create', [data]);
     },
     destory: function(successCallback,errorCallback){

@@ -2,9 +2,9 @@
 Interactive multimedia controls
 
 ## Supported platforms
-- Android (>= 4.1)
+- Android (4.1+)
 - iOS (under development)
-- Windows (under development)
+- Windows (10+)
 
 ## Installation
 `cordova plugin add https://github.com/filfat-Studios-AB/cordova-plugin-music-controller`
@@ -49,5 +49,7 @@ MusicController.subscribe(events, onSuccess, onError);
 ```
 
 ##Quirks
-* Currently you need to subscribe again after an action has fired.
+* Currently you need to subscribe again everytime an action has fired.
+* Cordova 5.0 or higher is required for Windows support.
+* Windows currently only supports locally stored covers.
 * This plugin is still under development which means that it's not yet "production ready".

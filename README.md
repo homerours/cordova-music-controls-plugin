@@ -53,3 +53,8 @@ MusicController.subscribe(events, onSuccess, onError);
 * Cordova 5.0 or higher is required for Windows support.
 * Windows currently only supports locally stored covers.
 * This plugin is still under development which means that it's not yet "production ready".
+
+
+##Screenshots
+![Android](http://i.imgur.com/Qe1a8ZJ.png)
+![Windows](http://i.imgur.com/Y4HsM0s.png)

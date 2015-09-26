@@ -50,4 +50,4 @@ MusicController.subscribe(events, onSuccess, onError);
 
 ##Quirks
 * Currently you need to subscribe again after an action has fired.
-* This plugin is still under development.
+* This plugin is still under development which means that it's not yet "production ready".

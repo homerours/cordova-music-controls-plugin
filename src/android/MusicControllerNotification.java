@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 import android.util.Log;
 import android.R;
@@ -27,9 +28,11 @@ import android.net.Uri;
 public class MusicControllerNotification {
     private Activity cordovaActivity;
     private NotificationManager notificationManager;
-    private int notificationID = 6427;
+    private int notificationID = 0;
 
     public MusicControllerNotification(Activity cordovaActivity){
+        Random r = new Random();
+        this.notificationID = r.nextInt(100000);
         this.cordovaActivity = cordovaActivity;
         Context context = cordovaActivity;
         this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

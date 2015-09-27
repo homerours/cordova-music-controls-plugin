@@ -1,4 +1,4 @@
-package com.filfatstudios.musiccontroller;
+package com.homerours.musiccontroller;
 
 import org.apache.cordova.CordovaInterface;
 
@@ -61,11 +61,12 @@ public class MusicControllerNotification {
         builder.setContentTitle(song).setContentText(artist);
         builder.setWhen(0);
         builder.setOngoing(true);
-        builder.setPriority(Notification.PRIORITY_HIGH);
+        builder.setPriority(Notification.PRIORITY_MAX);
         
-        //If 5.0 >= user MediaStyle
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
+        //If 5.0 >= use MediaStyle
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
             builder.setStyle(new Notification.MediaStyle());
+		}
             
         //Set SmallIcon
         if (isPlaying){
@@ -135,7 +136,7 @@ public class MusicControllerNotification {
         this.notificationManager.notify(this.notificationID, noti);
     }
 
-    public void destory(){
+    public void destroy(){
         this.notificationManager.cancel(this.notificationID);
     }
 }

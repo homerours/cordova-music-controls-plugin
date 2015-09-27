@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:amazon="http://schemas.android.com/apk/lib/com.amazon.device.ads"
-    xmlns:rim="http://www.blackberry.com/ns/widgets"
-    id="com.filfatstudios.musiccontroller"
-    version="1.2.2">
+    id="com.homerours.musiccontroller"
+    version="1.0.0">
     <name>MusicController</name>
-    <description>Interactive multimedia controls</description>
+    <description>Music controls for Cordova apps</description>
     <license>MIT</license>
 
     <engines>
@@ -23,7 +20,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="MusicController" >
-                <param name="android-package" value="com.filfatstudios.musiccontroller.MusicController"/>
+                <param name="android-package" value="com.homerours.musiccontroller.MusicController"/>
             </feature>
         </config-file>
 
@@ -31,9 +28,9 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </config-file>
 
-        <source-file src="src/android/MusicController.java" target-dir="src/com/filfatstudios/musiccontroller" />
-        <source-file src="src/android/MusicControllerBroadcastReceiver.java" target-dir="src/com/filfatstudios/musiccontroller" />
-        <source-file src="src/android/MusicControllerNotification.java" target-dir="src/com/filfatstudios/musiccontroller" />
+        <source-file src="src/android/MusicController.java" target-dir="src/com/homerours/musiccontroller" />
+        <source-file src="src/android/MusicControllerBroadcastReceiver.java" target-dir="src/com/homerours/musiccontroller" />
+        <source-file src="src/android/MusicControllerNotification.java" target-dir="src/com/homerours/musiccontroller" />
     </platform>
     
     <!-- windows -->

@@ -3,8 +3,8 @@ module.exports = {
     create: function(data, successCallback, errorCallback) {
         cordova.exec(successCallback, errorCallback, 'MusicController', 'create', [data]);
     },
-    destory: function(successCallback,errorCallback){
-        cordova.exec(successCallback, errorCallback, 'MusicController', 'destory', []);
+    destroy: function(successCallback,errorCallback){
+        cordova.exec(successCallback, errorCallback, 'MusicController', 'destroy', []);
     },
 
 	// Register callback

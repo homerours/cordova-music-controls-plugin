@@ -43,7 +43,7 @@ cordova.commandProxy.add("MusicController",{
 		mc.isPlaying = data.isPlaying;
 		mc.trackName = data.track;
     },
-    destory: function (successCallback, errorCallback, datas) {
+    destroy: function (successCallback, errorCallback, datas) {
         //Remove events
         mc.removeEventListener("playpausetogglepressed", onPlayPause);
         mc.removeEventListener("playpressed", onPlay);

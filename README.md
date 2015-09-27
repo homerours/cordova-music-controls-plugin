@@ -1,31 +1,30 @@
-# cordova-plugin-music-controller
-Interactive multimedia controls
+# Cordova Music Controls Plugin
+Music controls for Cordova applications.
 
 ## Supported platforms
 - Android (4.1+)
-- iOS (under development)
 - Windows (10+)
 
 ## Installation
-`cordova plugin add https://github.com/filfat-Studios-AB/cordova-plugin-music-controller`
+`cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`
 
 ## Methods
-Create the media controller:
+- Create the media controller:
 ```javascript
 MusicController.create({
-    track: 'Speak Now',
-	artist: 'Taylor Swift',
-    cover: 'albums/speak-now.jpg',
-    isPlaying: true
+    track     : 'Time is Running Out',
+	artist    : 'Muse',
+    cover     : 'albums/absolution.jpg',
+    isPlaying : true
 }, onSuccess, onError);
 ```
 
-Destroy the media controller:
+- Destroy the media controller:
 ```javascript
-MusicController.destory(onSuccess, onError);
+MusicController.destroy(onSuccess, onError);
 ```
 
-Subscribe to the media controller events:
+- Subscribe events to the media controller:
 ```javascript
 function events(action) {
 	switch(action){
@@ -42,7 +41,10 @@ function events(action) {
 			//Do something
 			break;
 
-		// Headset events
+		// Headset events (Android only)
+		case 'music-controller-media-button' :
+			//Do something
+			break;
 		case 'music-controller-headset-unplugged':
 			//Do something
 			break;
@@ -53,11 +55,13 @@ function events(action) {
 			break;
 	}
 }
+
 // Register callback
 MusicController.subscribe(events);
+
 // Start listening for events
 // The plugin will run the events function each time an event is fired
-Musiccontroller.listen();
+MusicController.listen();
 ```
 
 ##Quirks

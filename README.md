@@ -38,24 +38,29 @@ function events(action) {
 		case 'music-controller-pause':
 			//Do something
 			break;
+		case 'music-controller-play':
+			//Do something
+			break;
+
+		// Headset events
 		case 'music-controller-headset-unplugged':
 			//Do something
 			break;
 		case 'music-controller-headset-plugged':
 			//Do something
 			break;
-		case 'music-controller-play':
-			//Do something
-			break;
 		default:
 			break;
 	}
 }
-MusicController.subscribe(events, onSuccess, onError);
+// Register callback
+MusicController.subscribe(events);
+// Start listening for events
+// The plugin will run the events function each time an event is fired
+Musiccontroller.listen();
 ```
 
 ##Quirks
-* Currently you need to subscribe again everytime an action has fired.
 * Cordova 5.0 or higher is required for Windows support.
 * Windows currently only supports locally stored covers.
 * This plugin is still under development which means that it's not yet "production ready".

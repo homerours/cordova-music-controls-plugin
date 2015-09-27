@@ -38,6 +38,12 @@ function events(action) {
 		case 'music-controller-pause':
 			//Do something
 			break;
+		case 'music-controller-headset-unplugged':
+			//Do something
+			break;
+		case 'music-controller-headset-plugged':
+			//Do something
+			break;
 		case 'music-controller-play':
 			//Do something
 			break;

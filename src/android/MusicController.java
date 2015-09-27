@@ -1,4 +1,4 @@
-package com.homerours.musiccontrols;
+package com.filfatstudios.musiccontroller;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -18,26 +18,24 @@ import android.view.View;
 import android.R;
 import android.content.BroadcastReceiver;
 
-
-/**
- *  * This class echoes a string called from JavaScript.
- *   */
-public class MusicControls extends CordovaPlugin {
-    private static final String TAG = "MusicControls";
-    private MusicControlsBroadcastReceiver mMessageReceiver = new MusicControlsBroadcastReceiver();
-    private MusicControlsNotification notification;
-
+public class MusicController extends CordovaPlugin {
+    private MusicControllerBroadcastReceiver mMessageReceiver = new MusicControllerBroadcastReceiver();
+    private MusicControllerNotification notification;
+    
+    private void registerBroadcaster(MusicControllerBroadcastReceiver mMessageReceiver){
+        final Context context = this.cordova.getActivity().getApplicationContext();
+        context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-previous"));
+        context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-pause"));
+        context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-play"));
+        context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-next"));
+    }
+    
     @Override
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
-        final Context context=this.cordova.getActivity().getApplicationContext();
-        final Activity activity=this.cordova.getActivity();
-        Log.v("MUSICCONTROLS","Initialize");
-        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-previous"));
-        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-pause"));
-        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-play"));
-        context.registerReceiver((BroadcastReceiver)this.mMessageReceiver, new IntentFilter("music-controls-next"));
-        this.notification = new MusicControlsNotification(activity);
+        final Activity activity = this.cordova.getActivity();
+        registerBroadcaster(mMessageReceiver);
+        this.notification = new MusicControllerNotification(activity);
     }
 
     @Override
@@ -45,45 +43,43 @@ public class MusicControls extends CordovaPlugin {
         final Context context=this.cordova.getActivity().getApplicationContext();
         final Activity activity=this.cordova.getActivity();
 
-        if (action.equals("show")) {
+        if (action.equals("create")) {
             final JSONObject params = args.getJSONObject(0);
+            final String track = params.getString("track");
             final String artist = params.getString("artist");
-            final String song = params.getString("song");
+            final String cover = params.getString("cover");
             final boolean isPlaying= params.getBoolean("isPlaying");
-            final String imageNativeURL = params.getString("image");
             this.cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
-                    notification.updateNotification(artist,song,imageNativeURL,isPlaying);
+                    notification.updateNotification(artist, track, cover, isPlaying);
                     callbackContext.success("success");
                 }
             });
         }
-        if (action.equals("watch")) {
+        else if (action.equals("destory")){
+            this.notification.destory();
+            this.mMessageReceiver.stopListening();
+            callbackContext.success("success");
+        }
+        else if (action.equals("watch")) {
             this.cordova.getThreadPool().execute(new Runnable() {
                 public void run() {
                     mMessageReceiver.setCallback(callbackContext);
                 }
             });
         }
-        if (action.equals("stop")){
-            this.notification.cancel();
-            this.mMessageReceiver.stopListening();
-            callbackContext.success("success");
-        }
         return true;
     }
 
     @Override
     public void onDestroy() {
-        Log.v("MUSICCONTROLS","On destroy");
-        this.notification.cancel();
+        this.notification.destory();
         this.mMessageReceiver.stopListening();
         super.onDestroy();
     }
 
     @Override
     public void onReset() {
-        Log.v("MUSICCONTROLS","On reset");
         onDestroy();
         super.onReset();
     }

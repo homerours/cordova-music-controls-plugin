@@ -1,46 +1,60 @@
-# Cordova Music Controls Plugin
-
-Show controls for music playing in the notifications.
+# cordova-plugin-music-controller
+Interactive multimedia controls
 
 ## Supported platforms
-- Android (>= 4.1)
-- For iOS, see [shi11/Remotecontrols](https://github.com/shi11/RemoteControls)
+- Android (4.1+)
+- iOS (under development)
+- Windows (10+)
 
 ## Installation
-`cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`
+`cordova plugin add https://github.com/filfat-Studios-AB/cordova-plugin-music-controller`
 
 ## Methods
-
-Show or update notification:
+Create the media controller:
 ```javascript
-var data = {
-    artist    : ‘artist’,
-    song      : ‘song’,
-    image     : ‘imageNativeURL’,
-    isPlaying : true
-};
-MusicControls.show(data, onSuccess, onError);
+MusicController.create({
+    track: 'Speak Now',
+	artist: 'Taylor Swift',
+    cover: 'albums/speak-now.jpg',
+    isPlaying: true
+}, onSuccess, onError);
 ```
 
-Listen for next action:
+Destroy the media controller:
 ```javascript
-function listenAction(action) {
-    if (action===’music-controls-next’){
-        // Some code...
-    }
-    if (action===’music-controls-previous’){
-        // Some code...
-    }
-    if (action===’music-controls-pause’){
-        // Some code...
-    }
-    if (action===’music-controls-play’){
-        // Some code...
-    }
+MusicController.destory(onSuccess, onError);
+```
 
+Subscribe to the media controller events:
+```javascript
+function events(action) {
+	switch(action){
+		case 'music-controller-next':
+			//Do something
+			break;
+		case 'music-controller-previous':
+			//Do something
+			break;
+		case 'music-controller-pause':
+			//Do something
+			break;
+		case 'music-controller-play':
+			//Do something
+			break;
+		default:
+			break;
+	}
 }
-
-MusicControls.listen(listenAction, onSuccess, onError);
+MusicController.subscribe(events, onSuccess, onError);
 ```
-## Remarks
-This is my first Cordova plugin, and also my first attempt on Android. This plugin might not be perfect and should not be considered for production.
+
+##Quirks
+* Currently you need to subscribe again everytime an action has fired.
+* Cordova 5.0 or higher is required for Windows support.
+* Windows currently only supports locally stored covers.
+* This plugin is still under development which means that it's not yet "production ready".
+
+
+##Screenshots
+![Android](http://i.imgur.com/Qe1a8ZJ.png)
+![Windows](http://i.imgur.com/Y4HsM0s.png)

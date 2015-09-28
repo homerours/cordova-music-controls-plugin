@@ -1,4 +1,4 @@
-package com.homerours.musiccontroller;
+package com.homerours.musiccontrols;
 
 import org.apache.cordova.CordovaInterface;
 
@@ -25,12 +25,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Bitmap;
 import android.net.Uri;
 
-public class MusicControllerNotification {
+public class MusicControlsNotification {
     private Activity cordovaActivity;
     private NotificationManager notificationManager;
     private int notificationID = 0;
 
-    public MusicControllerNotification(Activity cordovaActivity){
+    public MusicControlsNotification(Activity cordovaActivity){
         Random r = new Random();
         this.notificationID = r.nextInt(100000);
         this.cordovaActivity = cordovaActivity;
@@ -107,22 +107,22 @@ public class MusicControllerNotification {
         
         //Controls
         /* Previous  */
-        Intent previousIntent = new Intent("music-controller-previous");
+        Intent previousIntent = new Intent("music-controls-previous");
         PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context, 1, previousIntent, 0);
         builder.addAction(android.R.drawable.ic_media_rew, "", previousPendingIntent);
         if (isPlaying){
             /* Pause  */
-            Intent pauseIntent = new Intent("music-controller-pause");
+            Intent pauseIntent = new Intent("music-controls-pause");
             PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, 1, pauseIntent, 0);
             builder.addAction(android.R.drawable.ic_media_pause, "", pausePendingIntent);
         } else {
             /* Play  */
-            Intent playIntent = new Intent("music-controller-play");
+            Intent playIntent = new Intent("music-controls-play");
             PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, 1, playIntent, 0);
             builder.addAction(android.R.drawable.ic_media_play, "", playPendingIntent);
         }
         /* Next */
-        Intent nextIntent = new Intent("music-controller-next");
+        Intent nextIntent = new Intent("music-controls-next");
         PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, 1, nextIntent, 0);
         builder.addAction(android.R.drawable.ic_media_ff, "", nextPendingIntent);
         

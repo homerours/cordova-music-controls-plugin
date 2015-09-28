@@ -1,4 +1,4 @@
-# Cordova Music Controller Plugin
+# Cordova Music Controls Plugin
 Music controls for Cordova applications.
 
 ## Supported platforms
@@ -11,9 +11,9 @@ For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
 `cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`
 
 ## Methods
-- Create the media controller:
+- Create the media controls:
 ```javascript
-MusicController.create({
+MusicControls.create({
     track     : 'Time is Running Out',
 	artist    : 'Muse',
     cover     : 'albums/absolution.jpg',
@@ -23,34 +23,34 @@ MusicController.create({
 
 - Destroy the media controller:
 ```javascript
-MusicController.destroy(onSuccess, onError);
+MusicControls.destroy(onSuccess, onError);
 ```
 
 - Subscribe events to the media controller:
 ```javascript
 function events(action) {
 	switch(action) {
-		case 'music-controller-next':
+		case 'music-controls-next':
 			// Do something
 			break;
-		case 'music-controller-previous':
+		case 'music-controls-previous':
 			// Do something
 			break;
-		case 'music-controller-pause':
+		case 'music-controls-pause':
 			// Do something
 			break;
-		case 'music-controller-play':
+		case 'music-controls-play':
 			// Do something
 			break;
 
 		// Headset events (Android only)
-		case 'music-controller-media-button' :
+		case 'music-controls-media-button' :
 			// Do something
 			break;
-		case 'music-controller-headset-unplugged':
+		case 'music-controls-headset-unplugged':
 			// Do something
 			break;
-		case 'music-controller-headset-plugged':
+		case 'music-controls-headset-plugged':
 			// Do something
 			break;
 		default:
@@ -59,11 +59,11 @@ function events(action) {
 }
 
 // Register callback
-MusicController.subscribe(events);
+MusicControls.subscribe(events);
 
 // Start listening for events
 // The plugin will run the events function each time an event is fired
-MusicController.listen();
+MusicControls.listen();
 ```
 ## Contributing
 
@@ -74,11 +74,5 @@ MusicController.listen();
 5. Create new Pull Request
 
 ## Quirks
-* Cordova 5.0 or higher is required for Windows support.
 * Windows currently only supports locally stored covers.
 * This plugin is still under development: it might not be considered for production apps.
-
-
-## Screenshots
-![Android](http://i.imgur.com/Qe1a8ZJ.png)
-![Windows](http://i.imgur.com/Y4HsM0s.png)

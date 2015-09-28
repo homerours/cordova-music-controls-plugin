@@ -2,10 +2,10 @@ var mc = Windows.Media.MediaControl;
 var onUpdate = function (event) { };
 
 var onPlay = function () {
-    onUpdate('music-controller-play');
+    onUpdate('music-controls-play');
 },
 onPause = function () {
-    onUpdate('music-controller-pause');
+    onUpdate('music-controls-pause');
 },
 onPlayPause = function () {
     if (mc.isPlaying)
@@ -14,13 +14,13 @@ onPlayPause = function () {
         onPlay();
 },
 onNext = function () {
-    onUpdate('music-controller-next');
+    onUpdate('music-controls-next');
 },
 onPrev = function () {
-    onUpdate('music-controller-previous');
+    onUpdate('music-controls-previous');
 };
 
-cordova.commandProxy.add("MusicController",{
+cordova.commandProxy.add("MusicControls",{
     create: function (successCallback, errorCallback, datas) {
         var data = datas[0];
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="cordova-plugin-music-controller"
+    id="cordova-plugin-music-controls"
     version="1.0.0">
-    <name>MusicController</name>
+    <name>MusicControls</name>
 	<keywords>cordova,music,controller,controls,media,plugin,notification</keywords>
 	<repo>https://github.com/homerours/cordova-music-controls-plugin</repo>
     <description>Music controls for Cordova apps</description>
@@ -13,17 +13,17 @@
         <engine name="cordova" version=">=3.4.0"/>
     </engines>
 
-    <asset src="www/MusicController.js" target="js/MusicController.js"/>
+    <asset src="www/MusicControls.js" target="js/MusicControls.js"/>
 
-    <js-module src="www/MusicController.js" name="MusicController">
-        <clobbers target="MusicController" />
+    <js-module src="www/MusicControls.js" name="MusicControls">
+        <clobbers target="MusicControls" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="MusicController" >
-                <param name="android-package" value="com.homerours.musiccontroller.MusicController"/>
+            <feature name="MusicControls" >
+                <param name="android-package" value="com.homerours.musiccontroller.MusicControls"/>
             </feature>
         </config-file>
 
@@ -31,14 +31,14 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </config-file>
 
-        <source-file src="src/android/MusicController.java" target-dir="src/com/homerours/musiccontroller" />
-        <source-file src="src/android/MusicControllerBroadcastReceiver.java" target-dir="src/com/homerours/musiccontroller" />
-        <source-file src="src/android/MusicControllerNotification.java" target-dir="src/com/homerours/musiccontroller" />
+        <source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />
+        <source-file src="src/android/MusicControlsBroadcastReceiver.java" target-dir="src/com/homerours/musiccontrols" />
+        <source-file src="src/android/MusicControlsNotification.java" target-dir="src/com/homerours/musiccontrols" />
     </platform>
     
     <!-- windows -->
   	<platform name="windows">
-    	<js-module src="src/windows/MusicControllerProxy.js" name="MusicControllerProxy">
+    	<js-module src="src/windows/MusicControlsProxy.js" name="MusicControlsProxy">
     		<merges target="" />
     	</js-module>
 	</platform>

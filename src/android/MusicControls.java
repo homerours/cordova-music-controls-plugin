@@ -1,4 +1,4 @@
-package com.homerours.musiccontroller;
+package com.homerours.musiccontrols;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -20,21 +20,21 @@ import android.R;
 import android.content.BroadcastReceiver;
 import android.media.AudioManager;
 
-public class MusicController extends CordovaPlugin {
-	private MusicControllerBroadcastReceiver mMessageReceiver;
-	private MusicControllerNotification notification;
+public class MusicControls extends CordovaPlugin {
+	private MusicControlsBroadcastReceiver mMessageReceiver;
+	private MusicControlsNotification notification;
 
 	private AudioManager mAudioManager;
 	private PendingIntent mediaButtonPendingIntent;
 
 
-	private void registerBroadcaster(MusicControllerBroadcastReceiver mMessageReceiver){
+	private void registerBroadcaster(MusicControlsBroadcastReceiver mMessageReceiver){
 		final Context context = this.cordova.getActivity().getApplicationContext();
-		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-previous"));
-		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-pause"));
-		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-play"));
-		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-next"));
-		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controller-media-button"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-previous"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-pause"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-play"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-next"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-media-button"));
 
 		// Listen for headset plug/unplug
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
@@ -52,14 +52,14 @@ public class MusicController extends CordovaPlugin {
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		final Activity activity = this.cordova.getActivity();
-		this.notification = new MusicControllerNotification(activity);
-		this.mMessageReceiver = new MusicControllerBroadcastReceiver(this);
+		this.notification = new MusicControlsNotification(activity);
+		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
 		registerBroadcaster(mMessageReceiver);
 
 		// Register media (headset) button event receiver
 		final Context context=activity.getApplicationContext();
 		this.mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-		Intent headsetIntent = new Intent("music-controller-media-button");
+		Intent headsetIntent = new Intent("music-controls-media-button");
 		this.mediaButtonPendingIntent = PendingIntent.getBroadcast(context, 0, headsetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		this.registerMediaButtonEvent();
 	}

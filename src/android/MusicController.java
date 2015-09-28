@@ -16,11 +16,8 @@ import android.content.IntentFilter;
 import android.content.Intent;
 import android.app.PendingIntent;
 import android.os.Bundle;
-import android.view.View;
 import android.R;
 import android.content.BroadcastReceiver;
-
-import android.content.ComponentName;
 import android.media.AudioManager;
 
 public class MusicController extends CordovaPlugin {

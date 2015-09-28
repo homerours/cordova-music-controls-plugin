@@ -1,5 +1,5 @@
 {
-  "name": "musicControls",
+  "name": "cordova-plugin-music-controller",
   "version": "1.0.0",
   "description": "Music controls for Cordova apps",
   "cordova": {

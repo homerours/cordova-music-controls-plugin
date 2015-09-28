@@ -1,0 +1,107 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/bin/npm', 'publish', './' ]
+2 info using npm@3.3.4
+3 info using node@v0.12.7
+4 verbose node symlink /usr/bin/node
+5 verbose publish [ './' ]
+6 silly cache add args [ './', null ]
+7 verbose cache add spec ./
+8 silly cache add parsed spec { raw: './',
+8 silly cache add   scope: null,
+8 silly cache add   name: null,
+8 silly cache add   rawSpec: './',
+8 silly cache add   spec: '/home/leo/dev/cordova/musicControls',
+8 silly cache add   type: 'directory' }
+9 verbose addLocalDirectory /home/leo/.npm/musicControls/1.0.0/package.tgz not in flight; packing
+10 info lifecycle musicControls@1.0.0~prepublish: musicControls@1.0.0
+11 silly lifecycle musicControls@1.0.0~prepublish: no script for prepublish, continuing
+12 verbose tar pack [ '/home/leo/.npm/musicControls/1.0.0/package.tgz',
+12 verbose tar pack   '/home/leo/dev/cordova/musicControls' ]
+13 verbose tarball /home/leo/.npm/musicControls/1.0.0/package.tgz
+14 verbose folder /home/leo/dev/cordova/musicControls
+15 verbose addLocalTarball adding from inside cache /home/leo/.npm/musicControls/1.0.0/package.tgz
+16 silly cache afterAdd musicControls@1.0.0
+17 verbose afterAdd /home/leo/.npm/musicControls/1.0.0/package/package.json not in flight; writing
+18 verbose afterAdd /home/leo/.npm/musicControls/1.0.0/package/package.json written
+19 silly publish { name: 'musicControls',
+19 silly publish   version: '1.0.0',
+19 silly publish   description: 'Music controls for Cordova apps',
+19 silly publish   cordova:
+19 silly publish    { id: 'cordova-plugin-music-controller',
+19 silly publish      platforms: [ 'android', 'windows' ] },
+19 silly publish   repository:
+19 silly publish    { type: 'git',
+19 silly publish      url: 'git+https://github.com/homerours/cordova-music-controls-plugin.git' },
+19 silly publish   keywords:
+19 silly publish    [ 'cordova',
+19 silly publish      'music',
+19 silly publish      'controller',
+19 silly publish      'controls',
+19 silly publish      'media',
+19 silly publish      'plugin',
+19 silly publish      'notification',
+19 silly publish      'ecosystem:cordova',
+19 silly publish      'cordova-android',
+19 silly publish      'cordova-windows' ],
+19 silly publish   engines: [ { name: 'cordova', version: '>=3.4.0' } ],
+19 silly publish   author: { name: 'HomerOurs' },
+19 silly publish   license: 'MIT',
+19 silly publish   bugs: { url: 'https://github.com/homerours/cordova-music-controls-plugin/issues' },
+19 silly publish   homepage: 'https://github.com/homerours/cordova-music-controls-plugin#readme',
+19 silly publish   readme: '# Cordova Music Controls Plugin\nMusic controls for Cordova applications.\n\n## Supported platforms\n- Android (4.1+)\n- Windows (10+)\n\n## Installation\n`cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`\n\n## Methods\n- Create the media controller:\n```javascript\nMusicController.create({\n    track     : \'Time is Running Out\',\n\tartist    : \'Muse\',\n    cover     : \'albums/absolution.jpg\',\n    isPlaying : true\n}, onSuccess, onError);\n```\n\n- Destroy the media controller:\n```javascript\nMusicController.destroy(onSuccess, onError);\n```\n\n- Subscribe events to the media controller:\n```javascript\nfunction events(action) {\n\tswitch(action){\n\t\tcase \'music-controller-next\':\n\t\t\t//Do something\n\t\t\tbreak;\n\t\tcase \'music-controller-previous\':\n\t\t\t//Do something\n\t\t\tbreak;\n\t\tcase \'music-controller-pause\':\n\t\t\t//Do something\n\t\t\tbreak;\n\t\tcase \'music-controller-play\':\n\t\t\t//Do something\n\t\t\tbreak;\n\n\t\t// Headset events (Android only)\n\t\tcase \'music-controller-media-button\' :\n\t\t\t//Do something\n\t\t\tbreak;\n\t\tcase \'music-controller-headset-unplugged\':\n\t\t\t//Do something\n\t\t\tbreak;\n\t\tcase \'music-controller-headset-plugged\':\n\t\t\t//Do something\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t}\n}\n\n// Register callback\nMusicController.subscribe(events);\n\n// Start listening for events\n// The plugin will run the events function each time an event is fired\nMusicController.listen();\n```\n\n##Quirks\n* Cordova 5.0 or higher is required for Windows support.\n* Windows currently only supports locally stored covers.\n* This plugin is still under development which means that it\'s not yet "production ready".\n\n\n##Screenshots\n![Android](http://i.imgur.com/Qe1a8ZJ.png)\n![Windows](http://i.imgur.com/Y4HsM0s.png)\n',
+19 silly publish   readmeFilename: 'README.md',
+19 silly publish   gitHead: 'cb1b3a8cad50bdd44659b186622d992c20de3e80',
+19 silly publish   _id: 'musicControls@1.0.0',
+19 silly publish   scripts: {},
+19 silly publish   _shasum: '67763bfef2f8f3b556f3aaac28cfe4086ec53640',
+19 silly publish   _from: '.' }
+20 verbose getPublishConfig undefined
+21 silly mapToRegistry name musicControls
+22 silly mapToRegistry using default registry
+23 silly mapToRegistry registry https://registry.npmjs.org/
+24 silly mapToRegistry uri https://registry.npmjs.org/musicControls
+25 verbose publish registryBase https://registry.npmjs.org/
+26 silly publish uploading /home/leo/.npm/musicControls/1.0.0/package.tgz
+27 verbose request uri https://registry.npmjs.org/musicControls
+28 verbose request sending authorization for write operation
+29 info attempt registry request try #1 at 10:54:29
+30 verbose request using bearer token for auth
+31 verbose request id 08ca62fa1b63c231
+32 http request PUT https://registry.npmjs.org/musicControls
+33 http 400 https://registry.npmjs.org/musicControls
+34 verbose headers { 'content-type': 'application/json',
+34 verbose headers   'cache-control': 'max-age=60',
+34 verbose headers   'content-length': '54',
+34 verbose headers   'accept-ranges': 'bytes',
+34 verbose headers   date: 'Mon, 28 Sep 2015 08:55:07 GMT',
+34 verbose headers   via: '1.1 varnish',
+34 verbose headers   connection: 'keep-alive',
+34 verbose headers   'x-served-by': 'cache-fra1238-FRA',
+34 verbose headers   'x-cache': 'MISS',
+34 verbose headers   'x-cache-hits': '0',
+34 verbose headers   'x-timer': 'S1443430505.983941,VS0,VE1053' }
+35 verbose request invalidating /home/leo/.npm/registry.npmjs.org/musicControls on PUT
+36 error publish Failed PUT 400
+37 verbose stack Error: name can no longer contain capital letters : musicControls
+37 verbose stack     at makeError (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+37 verbose stack     at CachingRegistryClient.<anonymous> (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+37 verbose stack     at Request._callback (/usr/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+37 verbose stack     at Request.self.callback (/usr/lib/node_modules/npm/node_modules/request/request.js:198:22)
+37 verbose stack     at Request.emit (events.js:110:17)
+37 verbose stack     at Request.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1063:14)
+37 verbose stack     at Request.emit (events.js:129:20)
+37 verbose stack     at IncomingMessage.<anonymous> (/usr/lib/node_modules/npm/node_modules/request/request.js:1009:12)
+37 verbose stack     at IncomingMessage.emit (events.js:129:20)
+37 verbose stack     at _stream_readable.js:908:16
+38 verbose statusCode 400
+39 verbose pkgid musicControls
+40 verbose cwd /home/leo/dev/cordova/musicControls
+41 error Linux 3.16.0-4-amd64
+42 error argv "node" "/usr/bin/npm" "publish" "./"
+43 error node v0.12.7
+44 error npm  v3.3.4
+45 error code E400
+46 error name can no longer contain capital letters : musicControls
+47 error If you need help, you may report this error at:
+47 error     <https://github.com/npm/npm/issues>
+48 verbose exit [ 1, true ]

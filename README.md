@@ -3,7 +3,7 @@ Music controls for Cordova applications.
 
 ## Supported platforms
 - Android (4.1+)
-- Windows (10+)
+- Windows (10+, by [fitfat](https://github.com/filfat))
 
 For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
 

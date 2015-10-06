@@ -1,6 +1,19 @@
 module.exports = {
 	updateCallback : function(){},
     create: function(data, successCallback, errorCallback) {
+		if (data.artist === undefined){
+			data.artist = '';
+		}
+		if (data.track === undefined){
+			data.track = '';
+		}
+		if (data.cover === undefined){
+			data.cover = '';
+		}
+		if (data.isPlaying === undefined){
+			data.isPlaying = true;
+		}
+		
         cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
     },
     destroy: function(successCallback,errorCallback){

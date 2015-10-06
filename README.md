@@ -1,5 +1,5 @@
 # Cordova Music Controls Plugin
-Music controls for Cordova applications.
+Music controls for Cordova applications. Display a 'media' notification with play/pause, previous, next buttons, allowing the user to control the play. Handle also headset event (plug, unplug, headset button).
 
 ## Supported platforms
 - Android (4.1+)
@@ -14,10 +14,10 @@ For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
 - Create the media controls:
 ```javascript
 MusicControls.create({
-    track     : 'Time is Running Out',
-	artist    : 'Muse',
-    cover     : 'albums/absolution.jpg',
-    isPlaying : true
+    track     : 'Time is Running Out',		// optional, default: ''
+	artist    : 'Muse',						// optional, default: ''
+    cover     : 'albums/absolution.jpg',	// optional, default: nothing
+    isPlaying : true						// optional, default: true
 }, onSuccess, onError);
 ```
 

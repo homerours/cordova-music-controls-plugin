@@ -30,6 +30,7 @@
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
         </config-file>
+
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<service android:name="com.homerours.musiccontrols.MusicControlsNotificationKiller"></service>
 		</config-file>

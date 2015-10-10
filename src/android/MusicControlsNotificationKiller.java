@@ -8,7 +8,7 @@ import android.content.Intent;
 
 public class MusicControlsNotificationKiller extends Service {
 
-	private static int NOTIFICATION_ID = 7825;
+	private static int NOTIFICATION_ID;
 	private NotificationManager mNM;
 	private final IBinder mBinder = new KillBinder(this);
 

@@ -35,7 +35,6 @@ public class MusicControls extends CordovaPlugin {
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-play"));
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-next"));
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-media-button"));
-		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-new-controls"));
 
 		// Listen for headset plug/unplug
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
@@ -53,9 +52,6 @@ public class MusicControls extends CordovaPlugin {
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		final Activity activity = this.cordova.getActivity();
-		// Cancel existing musiccontrols
-		Intent cancelIntent = new Intent("music-controls-new-controls");
-		activity.sendBroadcast(cancelIntent);
 
 		this.notification = new MusicControlsNotification(activity);
 		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);

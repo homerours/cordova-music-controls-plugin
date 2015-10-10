@@ -15,6 +15,10 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.content.Intent;
 import android.app.PendingIntent;
+import android.content.ServiceConnection;
+import android.content.ComponentName;
+import android.app.Service;
+import android.os.IBinder;
 import android.os.Bundle;
 import android.R;
 import android.content.BroadcastReceiver;
@@ -63,6 +67,16 @@ public class MusicControls extends CordovaPlugin {
 		Intent headsetIntent = new Intent("music-controls-media-button");
 		this.mediaButtonPendingIntent = PendingIntent.getBroadcast(context, 0, headsetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		this.registerMediaButtonEvent();
+
+		ServiceConnection mConnection = new ServiceConnection() {
+			public void onServiceConnected(ComponentName className, IBinder binder) {
+				((KillBinder) binder).service.startService(new Intent(activity, MusicControlsNotificationKiller.class));
+			}
+			public void onServiceDisconnected(ComponentName className) {
+			}
+		};
+		Intent startServiceIntent = new Intent(activity,MusicControlsNotificationKiller.class);
+		activity.bindService(startServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 	}
 
 	@Override

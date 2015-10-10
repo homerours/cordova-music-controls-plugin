@@ -27,7 +27,7 @@ import android.media.AudioManager;
 public class MusicControls extends CordovaPlugin {
 	private MusicControlsBroadcastReceiver mMessageReceiver;
 	private MusicControlsNotification notification;
-
+	private final int notificationID=7824;
 	private AudioManager mAudioManager;
 	private PendingIntent mediaButtonPendingIntent;
 
@@ -57,7 +57,7 @@ public class MusicControls extends CordovaPlugin {
 		super.initialize(cordova, webView);
 		final Activity activity = this.cordova.getActivity();
 
-		this.notification = new MusicControlsNotification(activity);
+		this.notification = new MusicControlsNotification(activity,this.notificationID);
 		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
 		this.registerBroadcaster(mMessageReceiver);
 
@@ -68,6 +68,7 @@ public class MusicControls extends CordovaPlugin {
 		this.mediaButtonPendingIntent = PendingIntent.getBroadcast(context, 0, headsetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		this.registerMediaButtonEvent();
 
+		// Notification Killer
 		ServiceConnection mConnection = new ServiceConnection() {
 			public void onServiceConnected(ComponentName className, IBinder binder) {
 				((KillBinder) binder).service.startService(new Intent(activity, MusicControlsNotificationKiller.class));
@@ -76,6 +77,7 @@ public class MusicControls extends CordovaPlugin {
 			}
 		};
 		Intent startServiceIntent = new Intent(activity,MusicControlsNotificationKiller.class);
+		startServiceIntent.putExtra("notificationID",this.notificationID);
 		activity.bindService(startServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 	}
 

@@ -15,9 +15,6 @@ import android.util.Log;
 import android.R;
 import android.content.Context;
 import android.app.Activity;
-import android.app.Service;
-import android.os.IBinder;
-import android.os.Binder;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -33,10 +30,8 @@ public class MusicControlsNotification {
 	private NotificationManager notificationManager;
 	private int notificationID;
 
-	public MusicControlsNotification(Activity cordovaActivity){
-		//Random r = new Random();
-		//this.notificationID = r.nextInt(100000);
-		this.notificationID = 7824;
+	public MusicControlsNotification(Activity cordovaActivity,int id){
+		this.notificationID = id;
 		this.cordovaActivity = cordovaActivity;
 		Context context = cordovaActivity;
 		this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

@@ -1,4 +1,7 @@
 # Cordova Music Controls Plugin
+
+<img src='https://github.com/homerours/cosmic/blob/master/screenshots/notification.jpg' width='564' height='342'>
+
 Music controls for Cordova applications. Display a 'media' notification with play/pause, previous, next buttons, allowing the user to control the play. Handle also headset event (plug, unplug, headset button).
 
 ## Supported platforms

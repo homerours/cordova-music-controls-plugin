@@ -35,6 +35,7 @@ public class MusicControls extends CordovaPlugin {
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-play"));
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-next"));
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-media-button"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-new-controls"));
 
 		// Listen for headset plug/unplug
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
@@ -52,9 +53,13 @@ public class MusicControls extends CordovaPlugin {
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		final Activity activity = this.cordova.getActivity();
+		// Cancel existing musiccontrols
+		Intent cancelIntent = new Intent("music-controls-new-controls");
+		activity.sendBroadcast(cancelIntent);
+
 		this.notification = new MusicControlsNotification(activity);
 		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
-		registerBroadcaster(mMessageReceiver);
+		this.registerBroadcaster(mMessageReceiver);
 
 		// Register media (headset) button event receiver
 		final Context context=activity.getApplicationContext();
@@ -73,11 +78,12 @@ public class MusicControls extends CordovaPlugin {
 			final JSONObject params = args.getJSONObject(0);
 			final String track = params.getString("track");
 			final String artist = params.getString("artist");
+			final String ticker = params.getString("ticker");
 			final String cover = params.getString("cover");
 			final boolean isPlaying= params.getBoolean("isPlaying");
 			this.cordova.getThreadPool().execute(new Runnable() {
 				public void run() {
-					notification.updateNotification(artist, track, cover, isPlaying);
+					notification.updateNotification(artist, track, cover, ticker, isPlaying);
 					callbackContext.success("success");
 				}
 			});

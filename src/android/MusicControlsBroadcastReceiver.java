@@ -61,10 +61,13 @@ public class MusicControlsBroadcastReceiver extends BroadcastReceiver {
 					this.cb.success(message);
 					this.cb = null;
 				}
+			} else if (message.equals("music-controls-new-controls")){
+				this.musicControls.onDestroy();
 			} else {
 				this.cb.success(message);
 				this.cb = null;
 			}
+
 
 		}
 

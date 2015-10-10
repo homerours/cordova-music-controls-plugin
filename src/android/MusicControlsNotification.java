@@ -28,11 +28,12 @@ import android.net.Uri;
 public class MusicControlsNotification {
     private Activity cordovaActivity;
     private NotificationManager notificationManager;
-    private int notificationID = 0;
+    private int notificationID;
 
     public MusicControlsNotification(Activity cordovaActivity){
-        Random r = new Random();
-        this.notificationID = r.nextInt(100000);
+		Random r = new Random();
+		this.notificationID = r.nextInt(100000);
+		//this.notificationID = 7824;
         this.cordovaActivity = cordovaActivity;
         Context context = cordovaActivity;
         this.notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -53,14 +54,20 @@ public class MusicControlsNotification {
         }
     }
 
-    private Notification.Builder createBuilder(String artist, String song, String cover, boolean isPlaying){
+    private Notification.Builder createBuilder(String artist, String song, String cover, String ticker, boolean isPlaying){
         Context context = cordovaActivity;
         Notification.Builder builder = new Notification.Builder(context);
         
         //Configure builder
-        builder.setContentTitle(song).setContentText(artist);
+        builder.setContentTitle(song);
+		if (!artist.isEmpty()){
+			builder.setContentText(artist);
+		}
         builder.setWhen(0);
         builder.setOngoing(true);
+		if (!ticker.isEmpty()){
+			builder.setTicker(ticker);
+		}
         builder.setPriority(Notification.PRIORITY_MAX);
         
         //If 5.0 >= use MediaStyle
@@ -130,8 +137,8 @@ public class MusicControlsNotification {
         return builder;
     }
 
-    public void updateNotification(String artist, String track, String cover, boolean isPlaying){
-        Notification.Builder builder = this.createBuilder(artist, track, cover, isPlaying);
+    public void updateNotification(String artist, String track, String cover, String ticker, boolean isPlaying){
+        Notification.Builder builder = this.createBuilder(artist, track, cover, ticker, isPlaying);
         Notification noti = builder.build();
         this.notificationManager.notify(this.notificationID, noti);
     }

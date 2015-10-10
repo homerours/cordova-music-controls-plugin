@@ -17,7 +17,11 @@ MusicControls.create({
     track     : 'Time is Running Out',		// optional, default: ''
 	artist    : 'Muse',						// optional, default: ''
     cover     : 'albums/absolution.jpg',	// optional, default: nothing
-    isPlaying : true						// optional, default: true
+    isPlaying : true,						// optional, default: true
+
+	// Android only, optional
+	// text displayed in the status bar when the notification (and the ticker) are updated
+	ticker	  : 'Now playing Time is Running Out'
 }, onSuccess, onError);
 ```
 

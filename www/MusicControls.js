@@ -10,10 +10,12 @@ module.exports = {
 		if (data.cover === undefined){
 			data.cover = '';
 		}
+		if (data.ticker === undefined){
+			data.ticker = '';
+		}
 		if (data.isPlaying === undefined){
 			data.isPlaying = true;
 		}
-		
         cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
     },
     destroy: function(successCallback,errorCallback){

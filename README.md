@@ -24,7 +24,7 @@ MusicControls.create({
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated
-	ticker	  : 'Now playing Time is Running Out'
+	ticker	  : 'Now playing "Time is Running Out"'
 }, onSuccess, onError);
 ```
 
@@ -80,6 +80,3 @@ MusicControls.listen();
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
 
-## Quirks
-* Windows currently only supports locally stored covers.
-* This plugin is still under development: it might not be considered for production apps.

@@ -28,7 +28,9 @@ import android.net.Uri;
 public class MusicControlsNotification {
 	private Activity cordovaActivity;
 	private NotificationManager notificationManager;
+	private Notification.Builder notificationBuilder;
 	private int notificationID;
+	private MusicControlsInfos infos;
 
 	public MusicControlsNotification(Activity cordovaActivity,int id){
 		this.notificationID = id;
@@ -53,19 +55,19 @@ public class MusicControlsNotification {
 		}
 	}
 
-	private Notification.Builder createBuilder(String artist, String song, String cover, String ticker, boolean isPlaying){
+	private void createBuilder(){
 		Context context = cordovaActivity;
 		Notification.Builder builder = new Notification.Builder(context);
 
 		//Configure builder
-		builder.setContentTitle(song);
-		if (!artist.isEmpty()){
-			builder.setContentText(artist);
+		builder.setContentTitle(infos.track);
+		if (!infos.artist.isEmpty()){
+			builder.setContentText(infos.artist);
 		}
 		builder.setWhen(0);
 		builder.setOngoing(true);
-		if (!ticker.isEmpty()){
-			builder.setTicker(ticker);
+		if (!infos.ticker.isEmpty()){
+			builder.setTicker(infos.ticker);
 		}
 		builder.setPriority(Notification.PRIORITY_MAX);
 
@@ -75,23 +77,23 @@ public class MusicControlsNotification {
 		}
 
 		//Set SmallIcon
-		if (isPlaying){
+		if (infos.isPlaying){
 			builder.setSmallIcon(R.drawable.ic_media_play);
 		} else {
 			builder.setSmallIcon(R.drawable.ic_media_pause);
 		}
 
 		//Set LargeIcon
-		if (!cover.isEmpty()){
-			if(cover.matches("^(https?|ftp)://.*$"))
+		if (!infos.cover.isEmpty()){
+			if(infos.cover.matches("^(https?|ftp)://.*$"))
 				try{
-					builder.setLargeIcon(getBitmapFromURL(cover));
+					builder.setLargeIcon(getBitmapFromURL(infos.cover));
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
 			else{
 				try {
-					Uri uri = Uri.parse(cover);
+					Uri uri = Uri.parse(infos.cover);
 					File file = new File(uri.getPath());
 					FileInputStream fileStream = new FileInputStream(file);
 					BufferedInputStream buf = new BufferedInputStream(fileStream);
@@ -116,7 +118,7 @@ public class MusicControlsNotification {
 		Intent previousIntent = new Intent("music-controls-previous");
 		PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context, 1, previousIntent, 0);
 		builder.addAction(android.R.drawable.ic_media_rew, "", previousPendingIntent);
-		if (isPlaying){
+		if (infos.isPlaying){
 			/* Pause  */
 			Intent pauseIntent = new Intent("music-controls-pause");
 			PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, 1, pauseIntent, 0);
@@ -133,12 +135,20 @@ public class MusicControlsNotification {
 		builder.addAction(android.R.drawable.ic_media_ff, "", nextPendingIntent);
 
 		//Return the created builder
-		return builder;
+		//return builder;
+		this.notificationBuilder = builder;
 	}
 
-	public void updateNotification(String artist, String track, String cover, String ticker, boolean isPlaying){
-		Notification.Builder builder = this.createBuilder(artist, track, cover, ticker, isPlaying);
-		Notification noti = builder.build();
+	public void updateNotification(MusicControlsInfos infos){
+		this.infos = infos;
+		this.createBuilder();
+		Notification noti = this.notificationBuilder.build();
+		this.notificationManager.notify(this.notificationID, noti);
+	}
+	public void updateIsPlaying(boolean isPlaying){
+		this.infos.isPlaying=isPlaying;
+		this.createBuilder();
+		Notification noti = this.notificationBuilder.build();
 		this.notificationManager.notify(this.notificationID, noti);
 	}
 

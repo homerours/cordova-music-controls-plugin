@@ -72,6 +72,11 @@ MusicControls.subscribe(events);
 // The plugin will run the events function each time an event is fired
 MusicControls.listen();
 ```
+
+```javascript
+MusicControls.updateIsPlaying(true); // toggle the play/pause notification button
+```
+
 ## Contributing
 
 1. Fork it

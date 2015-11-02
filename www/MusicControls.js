@@ -1,5 +1,6 @@
 module.exports = {
 	updateCallback : function(){},
+
     create: function(data, successCallback, errorCallback) {
 		if (data.artist === undefined){
 			data.artist = '';
@@ -18,6 +19,11 @@ module.exports = {
 		}
         cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
     },
+
+	updateIsPlaying: function(isPlaying,successCallback,errorCallback){
+        cordova.exec(successCallback, errorCallback, 'MusicControls', 'updateIsPlaying', [{isPlaying : isPlaying}]);
+	},
+
     destroy: function(successCallback,errorCallback){
         cordova.exec(successCallback, errorCallback, 'MusicControls', 'destroy', []);
     },

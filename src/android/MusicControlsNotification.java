@@ -31,8 +31,9 @@ public class MusicControlsNotification {
 	private Notification.Builder notificationBuilder;
 	private int notificationID;
 	private MusicControlsInfos infos;
+	private Notification.Action playpauseAction;
 
-	public MusicControlsNotification(Activity cordovaActivity,int id){
+	public MusicControlsNotification(Activity cordovaActivity,int id) {
 		this.notificationID = id;
 		this.cordovaActivity = cordovaActivity;
 		Context context = cordovaActivity;
@@ -55,7 +56,7 @@ public class MusicControlsNotification {
 		}
 	}
 
-	private void createBuilder(){
+	private void createBuilder() {
 		Context context = cordovaActivity;
 		Notification.Builder builder = new Notification.Builder(context);
 
@@ -118,17 +119,22 @@ public class MusicControlsNotification {
 		Intent previousIntent = new Intent("music-controls-previous");
 		PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context, 1, previousIntent, 0);
 		builder.addAction(android.R.drawable.ic_media_rew, "", previousPendingIntent);
+		
 		if (infos.isPlaying){
 			/* Pause  */
 			Intent pauseIntent = new Intent("music-controls-pause");
 			PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, 1, pauseIntent, 0);
-			builder.addAction(android.R.drawable.ic_media_pause, "", pausePendingIntent);
+			//builder.addAction(android.R.drawable.ic_media_pause, "", pausePendingIntent);
+			this.playpauseAction = new Notification.Action(android.R.drawable.ic_media_pause, "", pausePendingIntent);
 		} else {
 			/* Play  */
 			Intent playIntent = new Intent("music-controls-play");
 			PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, 1, playIntent, 0);
-			builder.addAction(android.R.drawable.ic_media_play, "", playPendingIntent);
+			//builder.addAction(android.R.drawable.ic_media_play, "", playPendingIntent);
+			this.playpauseAction = new Notification.Action(android.R.drawable.ic_media_play, "", playPendingIntent);
 		}
+		builder.addAction(playpauseAction);
+
 		/* Next */
 		Intent nextIntent = new Intent("music-controls-next");
 		PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, 1, nextIntent, 0);
@@ -139,17 +145,35 @@ public class MusicControlsNotification {
 		this.notificationBuilder = builder;
 	}
 
-	public void updateNotification(MusicControlsInfos infos){
+	public void updateNotification(MusicControlsInfos infos) {
 		this.infos = infos;
 		this.createBuilder();
 		Notification noti = this.notificationBuilder.build();
 		this.notificationManager.notify(this.notificationID, noti);
 	}
-	public void updateIsPlaying(boolean isPlaying){
-		this.infos.isPlaying=isPlaying;
-		this.createBuilder();
-		Notification noti = this.notificationBuilder.build();
-		this.notificationManager.notify(this.notificationID, noti);
+
+	public void updateIsPlaying(boolean isPlaying) {
+		Context context = cordovaActivity;
+		if (isPlaying){
+			/* Pause  */
+			this.notificationBuilder.setSmallIcon(R.drawable.ic_media_play);
+			Intent pauseIntent = new Intent("music-controls-pause");
+			PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, 1, pauseIntent, 0);
+			this.playpauseAction.icon = android.R.drawable.ic_media_pause;
+			this.playpauseAction.actionIntent = pausePendingIntent;
+		} else {
+			/* Play  */
+			this.notificationBuilder.setSmallIcon(R.drawable.ic_media_pause);
+			Intent playIntent = new Intent("music-controls-play");
+			PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, 1, playIntent, 0);
+			this.playpauseAction.icon = android.R.drawable.ic_media_play;
+			this.playpauseAction.actionIntent = playPendingIntent;
+		}
+
+		//this.infos.isPlaying = isPlaying;
+		//this.createBuilder();
+		Notification notif = this.notificationBuilder.build();
+		this.notificationManager.notify(this.notificationID, notif);
 	}
 
 	public void destroy(){

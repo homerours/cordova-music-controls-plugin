@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="cordova-plugin-music-controls"
-    version="1.2.0">
+    version="1.2.1">
     <name>MusicControls</name>
 	<keywords>cordova,music,controller,controls,media,plugin,notification</keywords>
 	<repo>https://github.com/homerours/cordova-music-controls-plugin</repo>

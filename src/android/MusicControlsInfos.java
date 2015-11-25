@@ -10,6 +10,8 @@ public class MusicControlsInfos{
 	public String ticker;
 	public String cover;
 	public boolean isPlaying;
+	public boolean hasPrev;
+	public boolean hasNext;
 
 	public MusicControlsInfos(JSONArray args) throws JSONException {
 		final JSONObject params = args.getJSONObject(0);
@@ -18,6 +20,8 @@ public class MusicControlsInfos{
 		this.ticker = params.getString("ticker");
 		this.cover = params.getString("cover");
 		this.isPlaying= params.getBoolean("isPlaying");
+		this.hasPrev= params.getBoolean("hasPrev");
+		this.hasNext= params.getBoolean("hasNext");
 	}
 
 }

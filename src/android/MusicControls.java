@@ -48,8 +48,13 @@ public class MusicControls extends CordovaPlugin {
 	public void registerMediaButtonEvent(){
 		this.mAudioManager.registerMediaButtonEventReceiver(this.mediaButtonPendingIntent);
 	}
+
 	public void unregisterMediaButtonEvent(){
 		this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+	}
+
+	public void destroyNotificationPlayer(){
+		this.notification.destroy();
 	}
 
 	@Override

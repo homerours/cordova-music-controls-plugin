@@ -22,9 +22,10 @@ MusicControls.create({
     cover     : 'albums/absolution.jpg',	// optional, default      : nothing
     isPlaying : true,						// optional, default      : true
 
-	// hide previous/next buttons:
+	// hide previous/next/close buttons:
 	hasPrev   : false,		// show previous button, optional, default: true
 	hasNext   : false,		// show next button, optional, default: true
+	hasClose  : false,		// show close button, optional, default: true
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated
@@ -51,6 +52,9 @@ function events(action) {
 			// Do something
 			break;
 		case 'music-controls-play':
+			// Do something
+			break;
+		case 'music-controls-destroy':
 			// Do something
 			break;
 

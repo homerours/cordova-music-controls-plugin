@@ -134,9 +134,9 @@ public class MusicControlsNotification {
 		}
 		builder.setPriority(Notification.PRIORITY_MAX);
 
-		//If 5.0 >= use MediaStyle
+		//If 5.0 >= set the controls to be visible on lockscreen
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
-			builder.setStyle(new Notification.MediaStyle());
+			builder.setVisibility(Notification.VISIBILITY_PUBLIC);
 		}
 
 		//Set SmallIcon
@@ -189,6 +189,10 @@ public class MusicControlsNotification {
 			builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, "", destroyPendingIntent);
 		}
 
+		//If 5.0 >= use MediaStyle
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+			builder.setStyle(new Notification.MediaStyle().setShowActionsInCompactView(0,1,2,3));
+		}
 		this.notificationBuilder = builder;
 	}
 

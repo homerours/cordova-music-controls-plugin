@@ -39,6 +39,7 @@ public class MusicControls extends CordovaPlugin {
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-play"));
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-next"));
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-media-button"));
+		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-destroy"));
 
 		// Listen for headset plug/unplug
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
@@ -53,7 +54,7 @@ public class MusicControls extends CordovaPlugin {
 		this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
 	}
 
-	public void destroyNotificationPlayer(){
+	public void destroyPlayerNotification(){
 		this.notification.destroy();
 	}
 

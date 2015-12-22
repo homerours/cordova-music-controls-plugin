@@ -24,7 +24,10 @@ module.exports = {
       data.hasNext = true;
     }
     if (data.hasClose === undefined) {
-      data.hasClose = true;
+      data.hasClose = false;
+    }
+    if (data.dismissable === undefined) {
+      data.dismissable = false;
     }
     
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);

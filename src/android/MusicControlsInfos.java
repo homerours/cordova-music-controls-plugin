@@ -13,6 +13,7 @@ public class MusicControlsInfos{
 	public boolean hasPrev;
 	public boolean hasNext;
 	public boolean hasClose;
+	public boolean dismissable;
 
 	public MusicControlsInfos(JSONArray args) throws JSONException {
 		final JSONObject params = args.getJSONObject(0);
@@ -25,6 +26,7 @@ public class MusicControlsInfos{
 		this.hasPrev = params.getBoolean("hasPrev");
 		this.hasNext = params.getBoolean("hasNext");
 		this.hasClose = params.getBoolean("hasClose");
+		this.dismissable = params.getBoolean("dismissable");
 	}
 
 }

@@ -119,7 +119,16 @@ public class MusicControlsNotification {
 			builder.setContentText(infos.artist);
 		}
 		builder.setWhen(0);
-		builder.setOngoing(true);
+
+		// set if the notification can be destroyed by swiping
+		if (infos.dismissable){
+			builder.setOngoing(false);
+			Intent dismissIntent = new Intent("music-controls-destroy");
+			PendingIntent dismissPendingIntent = PendingIntent.getBroadcast(context, 1, dismissIntent, 0);
+			builder.setDeleteIntent(dismissPendingIntent);
+		} else {
+			builder.setOngoing(true);
+		}
 		if (!infos.ticker.isEmpty()){
 			builder.setTicker(infos.ticker);
 		}

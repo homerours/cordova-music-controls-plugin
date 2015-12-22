@@ -17,15 +17,16 @@ For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
 - Create the media controls:
 ```javascript
 MusicControls.create({
-    track     : 'Time is Running Out',		// optional, default      : ''
-	artist    : 'Muse',						// optional, default      : ''
-    cover     : 'albums/absolution.jpg',	// optional, default      : nothing
-    isPlaying : true,						// optional, default      : true
+    track       : 'Time is Running Out',		// optional, default : ''
+	artist      : 'Muse',						// optional, default : ''
+    cover       : 'albums/absolution.jpg',		// optional, default : nothing
+    isPlaying   : true,							// optional, default : true
+	dismissable : true,							// optional, default : false
 
 	// hide previous/next/close buttons:
 	hasPrev   : false,		// show previous button, optional, default: true
 	hasNext   : false,		// show next button, optional, default: true
-	hasClose  : false,		// show close button, optional, default: true
+	hasClose  : true,		// show close button, optional, default: false
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated

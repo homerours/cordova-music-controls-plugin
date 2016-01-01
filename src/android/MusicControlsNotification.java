@@ -159,31 +159,37 @@ public class MusicControlsNotification {
 		builder.setContentIntent(resultPendingIntent);
 
 		//Controls
+		int nbControls=0;
 		/* Previous  */
 		if (infos.hasPrev){
+			nbControls++;
 			Intent previousIntent = new Intent("music-controls-previous");
 			PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context, 1, previousIntent, 0);
 			builder.addAction(android.R.drawable.ic_media_rew, "", previousPendingIntent);
 		}
 		if (infos.isPlaying){
 			/* Pause  */
+			nbControls++;
 			Intent pauseIntent = new Intent("music-controls-pause");
 			PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, 1, pauseIntent, 0);
 			builder.addAction(android.R.drawable.ic_media_pause, "", pausePendingIntent);
 		} else {
 			/* Play  */
+			nbControls++;
 			Intent playIntent = new Intent("music-controls-play");
 			PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, 1, playIntent, 0);
 			builder.addAction(android.R.drawable.ic_media_play, "", playPendingIntent);
 		}
 		/* Next */
 		if (infos.hasNext){
+			nbControls++;
 			Intent nextIntent = new Intent("music-controls-next");
 			PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, 1, nextIntent, 0);
 			builder.addAction(android.R.drawable.ic_media_ff, "", nextPendingIntent);
 		}
 		/* Close */
 		if (infos.hasClose){
+			nbControls++;
 			Intent destroyIntent = new Intent("music-controls-destroy");
 			PendingIntent destroyPendingIntent = PendingIntent.getBroadcast(context, 1, destroyIntent, 0);
 			builder.addAction(android.R.drawable.ic_menu_close_clear_cancel, "", destroyPendingIntent);
@@ -191,7 +197,11 @@ public class MusicControlsNotification {
 
 		//If 5.0 >= use MediaStyle
 		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
-			builder.setStyle(new Notification.MediaStyle().setShowActionsInCompactView(0,1,2,3));
+			int[] args = new int[nbControls];
+			for (int i = 0; i < nbControls; ++i) {
+				args[i] = i;
+			}
+			builder.setStyle(new Notification.MediaStyle().setShowActionsInCompactView(args));
 		}
 		this.notificationBuilder = builder;
 	}

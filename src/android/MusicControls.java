@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.app.Service;
 import android.os.IBinder;
 import android.os.Bundle;
+import android.os.Build;
 import android.R;
 import android.content.BroadcastReceiver;
 import android.media.AudioManager;
@@ -47,11 +48,15 @@ public class MusicControls extends CordovaPlugin {
 
 	// Register pendingIntent for broacast
 	public void registerMediaButtonEvent(){
-		this.mAudioManager.registerMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
+			this.mAudioManager.registerMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+		}
 	}
 
 	public void unregisterMediaButtonEvent(){
-		this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
+			this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+		}
 	}
 
 	public void destroyPlayerNotification(){

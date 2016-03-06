@@ -88,8 +88,17 @@ public class MusicControlsNotification {
 			buf.close();
 			return myBitmap;
 		} catch (Exception ex) {
-			ex.printStackTrace();
-			return null;
+			try {
+				InputStream fileStream = cordovaActivity.getAssets().open("www/" + localURL);
+				BufferedInputStream buf = new BufferedInputStream(fileStream);
+				Bitmap myBitmap = BitmapFactory.decodeStream(buf);
+				buf.close();
+				return myBitmap;
+			} catch (Exception ex2) {
+				ex.printStackTrace();
+				ex2.printStackTrace();
+				return null;
+			}
 		}
 	}
 

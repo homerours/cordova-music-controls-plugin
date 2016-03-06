@@ -31,6 +31,7 @@ public class MusicControls extends CordovaPlugin {
 	private final int notificationID=7824;
 	private AudioManager mAudioManager;
 	private PendingIntent mediaButtonPendingIntent;
+	private boolean mediaButtonAccess=true;
 
 
 	private void registerBroadcaster(MusicControlsBroadcastReceiver mMessageReceiver){
@@ -48,13 +49,13 @@ public class MusicControls extends CordovaPlugin {
 
 	// Register pendingIntent for broacast
 	public void registerMediaButtonEvent(){
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
+		if (this.mediaButtonAccess && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
 			this.mAudioManager.registerMediaButtonEventReceiver(this.mediaButtonPendingIntent);
 		}
 	}
 
 	public void unregisterMediaButtonEvent(){
-		if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
+		if (this.mediaButtonAccess && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
 			this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
 		}
 	}
@@ -67,17 +68,22 @@ public class MusicControls extends CordovaPlugin {
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 		final Activity activity = this.cordova.getActivity();
+		final Context context=activity.getApplicationContext();
 
 		this.notification = new MusicControlsNotification(activity,this.notificationID);
 		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
 		this.registerBroadcaster(mMessageReceiver);
 
 		// Register media (headset) button event receiver
-		final Context context=activity.getApplicationContext();
-		this.mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
-		Intent headsetIntent = new Intent("music-controls-media-button");
-		this.mediaButtonPendingIntent = PendingIntent.getBroadcast(context, 0, headsetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-		this.registerMediaButtonEvent();
+		try {
+			this.mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+			Intent headsetIntent = new Intent("music-controls-media-button");
+			this.mediaButtonPendingIntent = PendingIntent.getBroadcast(context, 0, headsetIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			this.registerMediaButtonEvent();
+		} catch (Exception e) {
+			this.mediaButtonAccess=false;
+			e.printStackTrace();
+		}
 
 		// Notification Killer
 		ServiceConnection mConnection = new ServiceConnection() {

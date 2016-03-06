@@ -68,5 +68,12 @@ cordova.commandProxy.add("MusicControls",{
     watch: function (_onUpdate, errorCallback, datas) {
         //Set callback
 	    onUpdate = _onUpdate;
+    },
+    updateIsPlaying: function (successCallback, errorCallback, par) {
+        if (par[0].isPlaying)
+            mc.playbackStatus = Windows.Media.MediaPlaybackStatus.playing;
+        else
+            mc.playbackStatus = Windows.Media.MediaPlaybackStatus.stopped;
+        mc.displayUpdater.update();
     }
 });

@@ -6,7 +6,7 @@ Music controls for Cordova applications. Display a 'media' notification with pla
 
 ## Supported platforms
 - Android (4.1+)
-- Windows (10+, by [fitfat](https://github.com/filfat))
+- Windows (10+, by [filfat](https://github.com/filfat))
 
 For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
 

@@ -1,46 +1,31 @@
 module.exports = {
   updateCallback: function () {},
-  
+
   create: function (data, successCallback, errorCallback) {
-    if (data.artist === undefined) {
-      data.artist = '';
-    }
-    if (data.track === undefined) {
-      data.track = '';
-    }
-    if (data.cover === undefined) {
-      data.cover = '';
-    }
-    if (data.ticker === undefined) {
-      data.ticker = '';
-    }
-    if (data.isPlaying === undefined) {
-      data.isPlaying = true;
-    }
-    if (data.hasPrev === undefined) {
-      data.hasPrev = true;
-    }
-    if (data.hasNext === undefined) {
-      data.hasNext = true;
-    }
-    if (data.hasClose === undefined) {
-      data.hasClose = false;
-    }
-    if (data.dismissable === undefined) {
-      data.dismissable = false;
-    }
-    
+    data.artist = !isUndefined(data.artist) ? data.artist : '';
+    data.track = !isUndefined(data.track) ? data.track : '';
+    data.album = !isUndefined(data.album) ? data.album : '';
+    data.cover = !isUndefined(data.cover) ? data.cover : '';
+    data.ticker = !isUndefined(data.ticker) ? data.ticker : '';
+    data.duration = !isUndefined(data.duration) ? data.ticker : 0;
+    data.elapsed = !isUndefined(data.elapsed) ? data.ticker : 0;
+    data.isPlaying = !isUndefined(data.isPlaying) ? data.isPlaying : true;
+    data.hasPrev = !isUndefined(data.hasPrev) ? data.hasPrev : true;
+    data.hasNext = !isUndefined(data.hasNext) ? data.hasNext : true;
+    data.hasClose = !isUndefined(data.hasClose) ? data.hasClose : false;
+    data.dismissable = !isUndefined(data.dismissable) ? data.dismissable : false;
+
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
   },
-  
+
   updateIsPlaying: function (isPlaying, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'updateIsPlaying', [{isPlaying: isPlaying}]);
   },
-  
+
   destroy: function (successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'destroy', []);
   },
-  
+
   // Register callback
   subscribe: function (onUpdate) {
     module.exports.updateCallback = onUpdate;
@@ -55,5 +40,9 @@ module.exports = {
     cordova.exec(module.exports.receiveCallbackFromNative, function (res) {
     }, 'MusicControls', 'watch', []);
   }
-  
+
 };
+
+function isUndefined(val) {
+  return val === undefined;
+}

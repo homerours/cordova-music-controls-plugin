@@ -7,8 +7,7 @@ Music controls for Cordova applications. Display a 'media' notification with pla
 ## Supported platforms
 - Android (4.1+)
 - Windows (10+, by [filfat](https://github.com/filfat))
-
-For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
+- iOS
 
 ## Installation
 `cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`
@@ -18,17 +17,22 @@ For iOS, see [shi11/RemoteControls](https://github.com/shi11/RemoteControls).
 ```javascript
 MusicControls.create({
     track       : 'Time is Running Out',		// optional, default : ''
-	artist      : 'Muse',						// optional, default : ''
+	  artist      : 'Muse',						// optional, default : ''
     cover       : 'albums/absolution.jpg',		// optional, default : nothing
 	// cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
 	//			 or a remote url ('http://...', 'https://...', 'ftp://...')
-    isPlaying   : true,							// optional, default : true
+  isPlaying   : true,							// optional, default : true
 	dismissable : true,							// optional, default : false
 
 	// hide previous/next/close buttons:
 	hasPrev   : false,		// show previous button, optional, default: true
 	hasNext   : false,		// show next button, optional, default: true
 	hasClose  : true,		// show close button, optional, default: false
+
+  // iOS only, optional
+  album       : 'Absolution'     // optional, default: ''
+  duration : 60, // optional, default: 0
+  elapsed : 10, // optional, default: 0
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated
@@ -58,6 +62,11 @@ function events(action) {
 			// Do something
 			break;
 		case 'music-controls-destroy':
+			// Do something
+			break;
+
+    // External controls (iOS only)
+    case 'music-controls-toggle-play-pause' :
 			// Do something
 			break;
 
@@ -96,4 +105,3 @@ MusicControls.updateIsPlaying(true); // toggle the play/pause notification butto
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-

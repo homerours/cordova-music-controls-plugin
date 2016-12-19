@@ -20,10 +20,10 @@
         [self setCover: [dictionary objectForKey:@"cover"]];
         [self setDuration: [[dictionary objectForKey:@"duration"] integerValue]];
         [self setElapsed: [[dictionary objectForKey:@"elapsed"] integerValue]];
-        [self setIsPlaying: [dictionary objectForKey:@"is_playing"]];
-        [self setHasPrev: [dictionary objectForKey:@"has_prev"]];
-        [self setHasNext: [dictionary objectForKey:@"has_next"]];
-        [self setDismissable: [dictionary objectForKey:@"dismissable"]];
+        [self setIsPlaying: [[dictionary objectForKey:@"isPlaying"] boolValue]];
+        [self setHasPrev: [[dictionary objectForKey:@"hasPrev"] boolValue]];
+        [self setHasNext: [[dictionary objectForKey:@"hasNext"] boolValue]];
+        [self setDismissable: [[dictionary objectForKey:@"dismissable"] boolValue]];
     }
     
     return self;

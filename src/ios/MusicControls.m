@@ -20,17 +20,27 @@
     }
     
     [self.commandDelegate runInBackground:^{
-        MPNowPlayingInfoCenter * nowPlayingCenter = [MPNowPlayingInfoCenter defaultCenter];
+        MPNowPlayingInfoCenter * nowPlayingInfoCenter =  [MPNowPlayingInfoCenter defaultCenter];
+        NSDictionary * nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo;
+        NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingInfo];
         
-        nowPlayingCenter.nowPlayingInfo = @{
-            MPMediaItemPropertyArtist: [musicControlsInfo artist],
-            MPMediaItemPropertyTitle: [musicControlsInfo track],
-            MPMediaItemPropertyAlbumTitle: [musicControlsInfo album],
-            MPMediaItemPropertyArtwork: [self createCoverArtwork:[musicControlsInfo cover]],
-            MPMediaItemPropertyPlaybackDuration: [NSNumber numberWithInt:[musicControlsInfo duration]],
-            MPNowPlayingInfoPropertyElapsedPlaybackTime:[NSNumber numberWithInt:[musicControlsInfo elapsed]],
-            MPNowPlayingInfoPropertyPlaybackRate: [NSNumber numberWithBool:[musicControlsInfo isPlaying]]
-        };
+        MPMediaItemArtwork * mediaItemArtwork = [self createCoverArtwork:[musicControlsInfo cover]];
+        NSNumber * duration = [NSNumber numberWithInt:[musicControlsInfo elapsed]];
+        NSNumber * elapsed = [NSNumber numberWithInt:[musicControlsInfo elapsed]];
+        NSNumber * playbackRate = [NSNumber numberWithBool:[musicControlsInfo isPlaying]];
+        
+        if (mediaItemArtwork != nil) {
+            [updatedNowPlayingInfo setObject:mediaItemArtwork forKey:MPMediaItemPropertyArtwork];
+        }
+        
+        [updatedNowPlayingInfo setObject:[musicControlsInfo artist] forKey:MPMediaItemPropertyArtist];
+        [updatedNowPlayingInfo setObject:[musicControlsInfo track] forKey:MPMediaItemPropertyTitle];
+        [updatedNowPlayingInfo setObject:[musicControlsInfo album] forKey:MPMediaItemPropertyAlbumTitle];
+        [updatedNowPlayingInfo setObject:duration forKey:MPMediaItemPropertyPlaybackDuration];
+        [updatedNowPlayingInfo setObject:elapsed forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+        [updatedNowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
+        
+        nowPlayingInfoCenter.nowPlayingInfo = updatedNowPlayingInfo;
     }];
 }
 
@@ -48,7 +58,6 @@
     
     [updatedNowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
     nowPlayingCenter.nowPlayingInfo = updatedNowPlayingInfo;
-
 }
 
 - (void) destroy: (CDVInvokedUrlCommand *) command {
@@ -128,6 +137,10 @@
                 
             case UIEventSubtypeRemoteControlNextTrack:
                 action = @"music-controls-next";
+                break;
+                
+            case UIEventSubtypeRemoteControlStop:
+                action = @"music-controls-destroy";
                 break;
                 
             default:

@@ -58,7 +58,40 @@ public class MusicControlsBroadcastReceiver extends BroadcastReceiver {
 				// Media button
 				KeyEvent event = (KeyEvent) intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
 				if (event.getAction() == KeyEvent.ACTION_DOWN) {
-					this.cb.success(message);
+
+					int keyCode = event.getKeyCode();
+					switch (keyCode) {
+						case KeyEvent.KEYCODE_MEDIA_NEXT:
+							this.cb.success("music-controls-media-button-next");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_PAUSE:
+							this.cb.success("music-controls-media-button-pause");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_PLAY:
+							this.cb.success("music-controls-media-button-play");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+							this.cb.success("music-controls-media-button-play-pause");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+							this.cb.success("music-controls-media-button-previous");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_STOP:
+							this.cb.success("music-controls-media-button-stop");
+							break;
+						case KeyEvent.KEYCODE_VOLUME_UP:
+							this.cb.success("music-controls-media-button-volume-up");
+							break;
+						case KeyEvent.KEYCODE_VOLUME_DOWN:
+							this.cb.success("music-controls-media-button-volume-down");
+							break;
+						case KeyEvent.KEYCODE_VOLUME_MUTE:
+							this.cb.success("music-controls-media-button-volume-mute");
+							break;
+						default:
+							this.cb.success(message);
+							break;
+					}
 					this.cb = null;
 				}
 			} else if (message.equals("music-controls-destroy")){

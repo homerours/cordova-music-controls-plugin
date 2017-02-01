@@ -25,7 +25,7 @@
         NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingInfo];
         
         MPMediaItemArtwork * mediaItemArtwork = [self createCoverArtwork:[musicControlsInfo cover]];
-        NSNumber * duration = [NSNumber numberWithInt:[musicControlsInfo elapsed]];
+        NSNumber * duration = [NSNumber numberWithInt:[musicControlsInfo duration]];
         NSNumber * elapsed = [NSNumber numberWithInt:[musicControlsInfo elapsed]];
         NSNumber * playbackRate = [NSNumber numberWithBool:[musicControlsInfo isPlaying]];
         

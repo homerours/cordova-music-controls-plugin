@@ -71,6 +71,7 @@ function events(action) {
 			break;
 
 		// Headset events (Android only)
+		// All media button events are listed below
 		case 'music-controls-media-button' :
 			// Do something
 			break;
@@ -97,6 +98,19 @@ MusicControls.listen();
 ```javascript
 MusicControls.updateIsPlaying(true); // toggle the play/pause notification button
 MusicControls.updateDismissable(true);
+```
+- List of media button events (Android only):
+```javascript
+'music-controls-media-button-next', 'music-controls-media-button-pause', 'music-controls-media-button-play',
+'music-controls-media-button-play-pause', 'music-controls-media-button-previous', 'music-controls-media-button-stop',
+'music-controls-media-button-fast-forward', 'music-controls-media-button-rewind', 'music-controls-media-button-skip-backward',
+'music-controls-media-button-skip-forward', 'music-controls-media-button-step-backward', 'music-controls-media-button-step-forward',
+'music-controls-media-button-meta-left', 'music-controls-media-button-meta-right', 'music-controls-media-button-music',
+'music-controls-media-button-volume-up', 'music-controls-media-button-volume-down', 'music-controls-media-button-volume-mute',
+'music-controls-media-button-headset-hook'
+
+// Default:
+'music-controls-media-button'
 ```
 
 ## Contributing

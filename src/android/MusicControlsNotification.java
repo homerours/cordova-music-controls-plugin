@@ -61,6 +61,13 @@ public class MusicControlsNotification {
 		this.notificationManager.notify(this.notificationID, noti);
 	}
 
+	// Toggle the dismissable status
+	public void updateDismissable(boolean dismissable){
+		this.infos.dismissable=dismissable;
+		this.createBuilder();
+		Notification noti = this.notificationBuilder.build();
+		this.notificationManager.notify(this.notificationID, noti);
+	}
 
 	// Get image from url
 	private void getBitmapCover(String coverURL){

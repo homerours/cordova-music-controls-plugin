@@ -79,6 +79,33 @@ public class MusicControlsBroadcastReceiver extends BroadcastReceiver {
 						case KeyEvent.KEYCODE_MEDIA_STOP:
 							this.cb.success("music-controls-media-button-stop");
 							break;
+						case KeyEvent.KEYCODE_MEDIA_FAST_FORWARD:
+							this.cb.success("music-controls-media-button-fast-forward");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_REWIND:
+							this.cb.success("music-controls-media-button-rewind");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD:
+							this.cb.success("music-controls-media-button-skip-backward");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_SKIP_FORWARD:
+							this.cb.success("music-controls-media-button-skip-forward");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_STEP_BACKWARD:
+							this.cb.success("music-controls-media-button-step-backward");
+							break;
+						case KeyEvent.KEYCODE_MEDIA_STEP_FORWARD:
+							this.cb.success("music-controls-media-button-step-forward");
+							break;
+						case KeyEvent.KEYCODE_META_LEFT:
+							this.cb.success("music-controls-media-button-meta-left");
+							break;
+						case KeyEvent.KEYCODE_META_RIGHT:
+							this.cb.success("music-controls-media-button-meta-right");
+							break;
+						case KeyEvent.KEYCODE_MUSIC:
+							this.cb.success("music-controls-media-button-music");
+							break;
 						case KeyEvent.KEYCODE_VOLUME_UP:
 							this.cb.success("music-controls-media-button-volume-up");
 							break;
@@ -87,6 +114,9 @@ public class MusicControlsBroadcastReceiver extends BroadcastReceiver {
 							break;
 						case KeyEvent.KEYCODE_VOLUME_MUTE:
 							this.cb.success("music-controls-media-button-volume-mute");
+							break;
+						case KeyEvent.KEYCODE_HEADSETHOOK:
+							this.cb.success("music-controls-media-button-headset-hook");
 							break;
 						default:
 							this.cb.success(message);

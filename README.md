@@ -96,6 +96,7 @@ MusicControls.listen();
 - Toggle play/pause:
 ```javascript
 MusicControls.updateIsPlaying(true); // toggle the play/pause notification button
+MusicControls.updateDismissable(true);
 ```
 
 ## Contributing

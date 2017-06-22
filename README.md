@@ -48,7 +48,9 @@ MusicControls.destroy(onSuccess, onError);
 - Subscribe events to the media controller:
 ```javascript
 function events(action) {
-	switch(action) {
+
+  const message = JSON.parse(action).message;
+	switch(message) {
 		case 'music-controls-next':
 			// Do something
 			break;
@@ -69,6 +71,14 @@ function events(action) {
     case 'music-controls-toggle-play-pause' :
 			// Do something
 			break;
+    case 'music-controls-seek-to':
+      const seekToInSeconds = JSON.parse(action).position;
+      MusicControls.updateElapsed({
+        elapsed: seekToInSeconds,
+        isPlaying: true 
+      });
+      // Do something
+      break;
 
 		// Headset events (Android only)
 		// All media button events are listed below
@@ -99,6 +109,16 @@ MusicControls.listen();
 MusicControls.updateIsPlaying(true); // toggle the play/pause notification button
 MusicControls.updateDismissable(true);
 ```
+
+- iOS Specific Events:
+Allows you to listen for iOS events fired from the scrubber in control center.
+```javascript
+MusicControls.updateElapsed({
+  elapsed: 208, // seconds
+  isPlaying: true
+});
+```
+
 - List of media button events (Android only):
 ```javascript
 'music-controls-media-button-next', 'music-controls-media-button-pause', 'music-controls-media-button-play',

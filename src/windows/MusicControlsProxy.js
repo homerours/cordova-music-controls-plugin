@@ -8,19 +8,19 @@ var onKey = function (event) {
     var Button = Windows.Media.SystemMediaTransportControlsButton;
     switch (event.button) {
         case Button.play:
-            onUpdate('music-controls-play');
+            onUpdate("{\"message\": \"music-controls-play\"}");
             break;
         case Button.pause:
-            onUpdate('music-controls-pause');
+            onUpdate("{\"message\": \"music-controls-pause\"}");
             break;
         case Button.stop:
-            onUpdate('music-controls-stop');
+            onUpdate("{\"message\": \"music-controls-stop\"}");
             break;
         case Button.next:
-            onUpdate('music-controls-next');
+            onUpdate("{\"message\": \"music-controls-next\"}");
             break;
         case Button.previous:
-            onUpdate('music-controls-previous');
+            onUpdate("{\"message\": \"music-controls-previous\"}");
             break;
     }
 };
@@ -47,7 +47,7 @@ cordova.commandProxy.add("MusicControls",{
             mc.playbackStatus = Windows.Media.MediaPlaybackStatus.playing;
         else
             mc.playbackStatus = Windows.Media.MediaPlaybackStatus.stopped;
-        
+
 
 		if (!/^(f|ht)tps?:\/\//i.test(data.cover)) {
 		    var cover = new Windows.Foundation.Uri("ms-appdata://" + data.cover);

@@ -19,6 +19,7 @@
 
 - (void) create: (CDVInvokedUrlCommand *) command;
 - (void) updateIsPlaying: (CDVInvokedUrlCommand *) command;
+- (void) updateElapsed: (CDVInvokedUrlCommand *) command;
 - (void) destroy: (CDVInvokedUrlCommand *) command;
 - (void) watch: (CDVInvokedUrlCommand *) command;
 - (MPMediaItemArtwork *) createCoverArtwork: (NSString *) coverUri;

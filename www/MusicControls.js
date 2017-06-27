@@ -21,6 +21,12 @@ module.exports = {
   updateIsPlaying: function (isPlaying, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'updateIsPlaying', [{isPlaying: isPlaying}]);
   },
+  updateElapsed: function (args, successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, 'MusicControls', 'updateElapsed', [{
+      elapsed: args.elapsed,
+      isPlaying: (args.isPlaying === undefined) ? '' : !!args.isPlaying
+    }]);
+  },
   updateDismissable: function (dismissable, successCallback, errorCallback) {
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'updateDismissable', [{dismissable: dismissable}]);
   },

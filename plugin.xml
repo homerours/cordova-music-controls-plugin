@@ -1,68 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="cordova-plugin-music-controls"
-    version="1.4.1">
-    <name>MusicControls</name>
-  	<keywords>cordova,music,controller,controls,media,plugin,notification,lockscreen,now,playing</keywords>
-  	<repo>https://github.com/homerours/cordova-music-controls-plugin</repo>
-    <description>Music controls for Cordova apps</description>
-    <license>MIT</license>
-  	<author>HomerOurs</author>
+	id="cordova-plugin-music-controls"
+	version="2.0.0">
+	<name>MusicControls</name>
+	<keywords>cordova,music,controller,controls,media,plugin,notification,lockscreen,now,playing</keywords>
+	<repo>https://github.com/homerours/cordova-music-controls-plugin</repo>
+	<description>Music controls for Cordova apps</description>
+	<license>MIT</license>
+	<author>HomerOurs</author>
 
-    <engines>
-        <engine name="cordova" version=">=3.4.0"/>
-    </engines>
+	<engines>
+		<engine name="cordova" version=">=3.4.0"/>
+	</engines>
 
-    <asset src="www/MusicControls.js" target="js/MusicControls.js"/>
+	<asset src="www/MusicControls.js" target="js/MusicControls.js"/>
 
-    <js-module src="www/MusicControls.js" name="MusicControls">
-        <clobbers target="MusicControls" />
-    </js-module>
+	<js-module src="www/MusicControls.js" name="MusicControls">
+		<clobbers target="MusicControls" />
+	</js-module>
 
-    <!-- android -->
-    <platform name="android">
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="MusicControls" >
-                <param name="android-package" value="com.homerours.musiccontrols.MusicControls"/>
-            </feature>
-        </config-file>
+	<!-- android -->
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="MusicControls" >
+				<param name="android-package" value="com.homerours.musiccontrols.MusicControls"/>
+			</feature>
+		</config-file>
 
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-        </config-file>
+		<config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+		</config-file>
 
-    		<config-file target="AndroidManifest.xml" parent="/manifest/application">
-    			<service android:name="com.homerours.musiccontrols.MusicControlsNotificationKiller"></service>
-    		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<service android:name="com.homerours.musiccontrols.MusicControlsNotificationKiller"></service>
+		</config-file>
 
-        <source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />
-        <source-file src="src/android/MusicControlsBroadcastReceiver.java" target-dir="src/com/homerours/musiccontrols" />
-        <source-file src="src/android/MusicControlsNotification.java" target-dir="src/com/homerours/musiccontrols" />
-        <source-file src="src/android/MusicControlsNotificationKiller.java" target-dir="src/com/homerours/musiccontrols" />
-        <source-file src="src/android/MusicControlsInfos.java" target-dir="src/com/homerours/musiccontrols" />
-        <source-file src="src/android/KillBinder.java" target-dir="src/com/homerours/musiccontrols" />
-    </platform>
+		<source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />
+		<source-file src="src/android/MusicControlsBroadcastReceiver.java" target-dir="src/com/homerours/musiccontrols" />
+		<source-file src="src/android/MusicControlsNotification.java" target-dir="src/com/homerours/musiccontrols" />
+		<source-file src="src/android/MusicControlsNotificationKiller.java" target-dir="src/com/homerours/musiccontrols" />
+		<source-file src="src/android/MusicControlsInfos.java" target-dir="src/com/homerours/musiccontrols" />
+		<source-file src="src/android/KillBinder.java" target-dir="src/com/homerours/musiccontrols" />
+	</platform>
 
-    <!-- windows -->
-  	<platform name="windows">
-    	<js-module src="src/windows/MusicControlsProxy.js" name="MusicControlsProxy">
-    		<merges target="" />
-    	</js-module>
-    </platform>
+	<!-- windows -->
+	<platform name="windows">
+		<js-module src="src/windows/MusicControlsProxy.js" name="MusicControlsProxy">
+			<merges target="" />
+		</js-module>
+	</platform>
 
-    <platform name="ios">
-      <config-file target="config.xml" parent="/*">
-          <feature name="MusicControls">
-              <param name="ios-package" value="MusicControls" />
-          </feature>
-      </config-file>
-      <header-file src="src/ios/MainViewController+MusicControls.h" />
-      <source-file src="src/ios/MainViewController+MusicControls.m" />
-      <header-file src="src/ios/MusicControls.h" />
-      <source-file src="src/ios/MusicControls.m" />
-      <header-file src="src/ios/MusicControlsInfo.h" />
-      <source-file src="src/ios/MusicControlsInfo.m" />
-      <framework src="MediaPlayer.framework" />
-    </platform>
+	<platform name="ios">
+		<config-file target="config.xml" parent="/*">
+			<feature name="MusicControls">
+				<param name="ios-package" value="MusicControls" />
+			</feature>
+		</config-file>
+		<header-file src="src/ios/MainViewController+MusicControls.h" />
+		<source-file src="src/ios/MainViewController+MusicControls.m" />
+		<header-file src="src/ios/MusicControls.h" />
+		<source-file src="src/ios/MusicControls.m" />
+		<header-file src="src/ios/MusicControlsInfo.h" />
+		<source-file src="src/ios/MusicControlsInfo.m" />
+		<framework src="MediaPlayer.framework" />
+	</platform>
 
 </plugin>

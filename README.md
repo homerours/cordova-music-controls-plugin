@@ -17,11 +17,11 @@ Music controls for Cordova applications. Display a 'media' notification with pla
 ```javascript
 MusicControls.create({
     track       : 'Time is Running Out',		// optional, default : ''
-	  artist      : 'Muse',						// optional, default : ''
+	artist      : 'Muse',						// optional, default : ''
     cover       : 'albums/absolution.jpg',		// optional, default : nothing
 	// cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
 	//			 or a remote url ('http://...', 'https://...', 'ftp://...')
-  isPlaying   : true,							// optional, default : true
+	isPlaying   : true,							// optional, default : true
 	dismissable : true,							// optional, default : false
 
 	// hide previous/next/close buttons:
@@ -29,10 +29,10 @@ MusicControls.create({
 	hasNext   : false,		// show next button, optional, default: true
 	hasClose  : true,		// show close button, optional, default: false
 
-  // iOS only, optional
-  album       : 'Absolution'     // optional, default: ''
-  duration : 60, // optional, default: 0
-  elapsed : 10, // optional, default: 0
+	// iOS only, optional
+	album       : 'Absolution',     // optional, default: ''
+  	duration : 60, // optional, default: 0
+  	elapsed : 10, // optional, default: 0
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated
@@ -67,18 +67,18 @@ function events(action) {
 			// Do something
 			break;
 
-    // External controls (iOS only)
-    case 'music-controls-toggle-play-pause' :
+		// External controls (iOS only)
+    	case 'music-controls-toggle-play-pause' :
 			// Do something
 			break;
-    case 'music-controls-seek-to':
-      const seekToInSeconds = JSON.parse(action).position;
-      MusicControls.updateElapsed({
-        elapsed: seekToInSeconds,
-        isPlaying: true 
-      });
-      // Do something
-      break;
+    	case 'music-controls-seek-to':
+			const seekToInSeconds = JSON.parse(action).position;
+			MusicControls.updateElapsed({
+				elapsed: seekToInSeconds,
+				isPlaying: true 
+			});
+			// Do something
+			break;
 
 		// Headset events (Android only)
 		// All media button events are listed below
@@ -114,8 +114,8 @@ MusicControls.updateDismissable(true);
 Allows you to listen for iOS events fired from the scrubber in control center.
 ```javascript
 MusicControls.updateElapsed({
-  elapsed: 208, // seconds
-  isPlaying: true
+	elapsed: 208, // seconds
+	isPlaying: true
 });
 ```
 

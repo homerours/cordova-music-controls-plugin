@@ -1,4 +1,4 @@
-module.exports = {
+var MusicControls = {
   updateCallback: function () {},
 
   create: function (data, successCallback, errorCallback) {
@@ -37,16 +37,16 @@ module.exports = {
 
   // Register callback
   subscribe: function (onUpdate) {
-    module.exports.updateCallback = onUpdate;
+    MusicControls.updateCallback = onUpdate;
   },
   // Start listening for events
   listen: function () {
-    cordova.exec(module.exports.receiveCallbackFromNative, function (res) {
+    cordova.exec(MusicControls.receiveCallbackFromNative, function (res) {
     }, 'MusicControls', 'watch', []);
   },
   receiveCallbackFromNative: function (messageFromNative) {
-    module.exports.updateCallback(messageFromNative);
-    cordova.exec(module.exports.receiveCallbackFromNative, function (res) {
+    MusicControls.updateCallback(messageFromNative);
+    cordova.exec(MusicControls.receiveCallbackFromNative, function (res) {
     }, 'MusicControls', 'watch', []);
   }
 
@@ -55,3 +55,5 @@ module.exports = {
 function isUndefined(val) {
   return val === undefined;
 }
+
+module.exports = MusicControls;

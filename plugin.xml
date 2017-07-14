@@ -54,6 +54,7 @@
 		<config-file target="config.xml" parent="/*">
 			<feature name="MusicControls">
 				<param name="ios-package" value="MusicControls" />
+				<param name="onload" value="true" />
 			</feature>
 		</config-file>
 		<header-file src="src/ios/MainViewController+MusicControls.h" />

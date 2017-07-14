@@ -175,7 +175,9 @@
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleMusicControlsNotification:) name:@"musicControlsEventNotification" object:nil];
 
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+    // NSFoundationVersionNumber_iOS_9_0 = 1240.100000
+
+    if (floor(NSFoundationVersionNumber) > 1240.100000) {
       //only available in iOS 9.1 and up.
       MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
       [commandCenter.changePlaybackPositionCommand setEnabled:true];
@@ -196,7 +198,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"receivedEvent" object:nil];
     [self setLatestEventCallbackId:nil];
 
-    if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+    if (floor(NSFoundationVersionNumber) > 1240.100000) {
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
         [commandCenter.changePlaybackPositionCommand setEnabled:false];
         [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];

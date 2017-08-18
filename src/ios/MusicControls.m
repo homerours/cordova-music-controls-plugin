@@ -178,10 +178,18 @@
     // NSFoundationVersionNumber_iOS_9_0 = 1240.100000
 
     if (floor(NSFoundationVersionNumber) > 1240.100000) {
-      //only available in iOS 9.1 and up.
-      MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-      [commandCenter.changePlaybackPositionCommand setEnabled:true];
-      [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
+        //only available in iOS 9.1 and up.
+        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+        [commandCenter.changePlaybackPositionCommand setEnabled:true];        
+        [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
+        
+        MPRemoteCommandHandlerStatus(^dummyHandler)(MPRemoteCommandEvent *);
+        dummyHandler = ^( MPRemoteCommandEvent * event) {
+            return MPRemoteCommandHandlerStatusSuccess;
+        };
+        [commandCenter.togglePlayPauseCommand addTargetWithHandler:dummyHandler];
+        [commandCenter.nextTrackCommand addTargetWithHandler:dummyHandler];
+        [commandCenter.previousTrackCommand addTargetWithHandler:dummyHandler];
     }
 }
 

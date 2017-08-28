@@ -31,8 +31,12 @@ MusicControls.create({
 
 	// iOS only, optional
 	album       : 'Absolution',     // optional, default: ''
-  	duration : 60, // optional, default: 0
-  	elapsed : 10, // optional, default: 0
+	duration : 60, // optional, default: 0
+	elapsed : 10, // optional, default: 0
+  	hasSkipForward : true, //optional, default: false. true value overrides hasNext.
+  	hasSkipBackward : true, //optional, default: false. true value overrides hasPrev.
+  	skipForwardInterval : 15, //optional. default: 0.
+	skipBackwardInterval : 15, //optional. default: 0. 
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated
@@ -75,7 +79,7 @@ function events(action) {
 			const seekToInSeconds = JSON.parse(action).position;
 			MusicControls.updateElapsed({
 				elapsed: seekToInSeconds,
-				isPlaying: true 
+				isPlaying: true
 			});
 			// Do something
 			break;
@@ -128,6 +132,11 @@ MusicControls.updateElapsed({
 'music-controls-media-button-meta-left', 'music-controls-media-button-meta-right', 'music-controls-media-button-music',
 'music-controls-media-button-volume-up', 'music-controls-media-button-volume-down', 'music-controls-media-button-volume-mute',
 'music-controls-media-button-headset-hook'
+
+- iOS Only:
+```javascript
+'music-controls-skip-forward', 'music-controls-skip-backward'
+```
 
 // Default:
 'music-controls-media-button'

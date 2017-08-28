@@ -1,6 +1,6 @@
 //
 //  MusicControlsInfo.h
-//  
+//
 //
 //  Created by Juan Gonzalez on 12/17/16.
 //
@@ -23,6 +23,10 @@
 @property bool isPlaying;
 @property bool hasPrev;
 @property bool hasNext;
+@property bool hasSkipForward;
+@property bool hasSkipBackward;
+@property int skipForwardInterval;
+@property int skipBackwardInterval;
 @property bool dismissable;
 
 - (id) initWithDictionary: (NSDictionary *) dictionary;

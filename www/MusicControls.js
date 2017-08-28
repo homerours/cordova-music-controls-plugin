@@ -12,6 +12,10 @@ var musicControls = {
     data.isPlaying = !isUndefined(data.isPlaying) ? data.isPlaying : true;
     data.hasPrev = !isUndefined(data.hasPrev) ? data.hasPrev : true;
     data.hasNext = !isUndefined(data.hasNext) ? data.hasNext : true;
+    data.hasSkipForward = !isUndefined(data.hasSkipForward) ? data.hasSkipForward : false;
+    data.hasSkipBackward = !isUndefined(data.hasSkipBackward) ? data.hasSkipBackward : false;
+    data.skipForwardInterval = !isUndefined(data.skipForwardInterval) ? data.skipForwardInterval : 0;
+    data.skipBackwardInterval = !isUndefined(data.skipBackwardInterval) ? data.skipBackwardInterval : 0;
     data.hasClose = !isUndefined(data.hasClose) ? data.hasClose : false;
     data.dismissable = !isUndefined(data.dismissable) ? data.dismissable : false;
 

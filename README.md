@@ -1,6 +1,6 @@
 # Cordova Music Controls Plugin
 
-<img src='https://github.com/homerours/cosmic/blob/master/screenshots/notification.png' width='564' height='342'>
+<img src='https://imgur.com/fh3ACOq.png' width='564' height='342'>
 
 Music controls for Cordova applications. Display a 'media' notification with play/pause, previous, next buttons, allowing the user to control the play. Handle also headset event (plug, unplug, headset button).
 
@@ -123,7 +123,13 @@ MusicControls.updateElapsed({
 });
 ```
 
-- List of media button events (Android only):
+## List of media button events 
+- Default:
+```javascript
+'music-controls-media-button'
+```
+
+- Android only:
 ```javascript
 'music-controls-media-button-next', 'music-controls-media-button-pause', 'music-controls-media-button-play',
 'music-controls-media-button-play-pause', 'music-controls-media-button-previous', 'music-controls-media-button-stop',
@@ -132,14 +138,11 @@ MusicControls.updateElapsed({
 'music-controls-media-button-meta-left', 'music-controls-media-button-meta-right', 'music-controls-media-button-music',
 'music-controls-media-button-volume-up', 'music-controls-media-button-volume-down', 'music-controls-media-button-volume-mute',
 'music-controls-media-button-headset-hook'
+```
 
 - iOS Only:
 ```javascript
 'music-controls-skip-forward', 'music-controls-skip-backward'
-```
-
-// Default:
-'music-controls-media-button'
 ```
 
 ## Contributing

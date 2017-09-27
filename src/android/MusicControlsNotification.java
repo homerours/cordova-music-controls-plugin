@@ -181,7 +181,7 @@ public class MusicControlsNotification {
 			nbControls++;
 			Intent previousIntent = new Intent("music-controls-previous");
 			PendingIntent previousPendingIntent = PendingIntent.getBroadcast(context, 1, previousIntent, 0);
-			builder.addAction(android.R.drawable.ic_media_rew, "", previousPendingIntent);
+			builder.addAction(android.R.drawable.ic_media_previous, "", previousPendingIntent);
 		}
 		if (infos.isPlaying){
 			/* Pause  */
@@ -201,7 +201,7 @@ public class MusicControlsNotification {
 			nbControls++;
 			Intent nextIntent = new Intent("music-controls-next");
 			PendingIntent nextPendingIntent = PendingIntent.getBroadcast(context, 1, nextIntent, 0);
-			builder.addAction(android.R.drawable.ic_media_ff, "", nextPendingIntent);
+			builder.addAction(android.R.drawable.ic_media_next, "", nextPendingIntent);
 		}
 		/* Close */
 		if (infos.hasClose){

@@ -4,7 +4,7 @@
   "description": "Music controls for Cordova apps",
   "cordova": {
     "id": "cordova-plugin-music-controls",
-    "platforms": ["android", "windows"]
+    "platforms": ["android", "windows", "ios"]
   },
   "repository": {
     "type": "git",

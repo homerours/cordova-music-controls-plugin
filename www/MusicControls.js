@@ -18,6 +18,8 @@ var musicControls = {
     data.skipBackwardInterval = !isUndefined(data.skipBackwardInterval) ? data.skipBackwardInterval : 0;
     data.hasClose = !isUndefined(data.hasClose) ? data.hasClose : false;
     data.dismissable = !isUndefined(data.dismissable) ? data.dismissable : false;
+    data.playIcon = !isUndefned(data.playIcon) ? data.playIcon : '';
+    data.pauseIcon = !isUndefined(data.pauseIcon) ? data.pauseIcon : '';
 
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
   },

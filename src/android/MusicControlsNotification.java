@@ -188,12 +188,14 @@ public class MusicControlsNotification {
 			nbControls++;
 			Intent pauseIntent = new Intent("music-controls-pause");
 			PendingIntent pausePendingIntent = PendingIntent.getBroadcast(context, 1, pauseIntent, 0);
+			//this.getResourceId(infos.pauseIcon, android.R.drawable.ic_media_pause)
 			builder.addAction(android.R.drawable.ic_media_pause, "", pausePendingIntent);
 		} else {
 			/* Play  */
 			nbControls++;
 			Intent playIntent = new Intent("music-controls-play");
 			PendingIntent playPendingIntent = PendingIntent.getBroadcast(context, 1, playIntent, 0);
+			//this.getResourceId(infos.playIcon, android.R.drawable.ic_media_play)
 			builder.addAction(android.R.drawable.ic_media_play, "", playPendingIntent);
 		}
 		/* Next */
@@ -222,6 +224,20 @@ public class MusicControlsNotification {
 		this.notificationBuilder = builder;
 	}
 
+	private int getResourceId(String name, int fallback){
+		return fallback;
+		/*try{
+			if(name.isEmpty()){
+				return fallback;
+			}
+
+			int resId = this.cordovaActivity.getResources().getIdentifier(name, "drawable", this.cordovaActivity.getPackageName());
+			return resId == 0 ? fallback : resId;
+		}
+		catch(Exception ex){
+			return fallback;
+		}*/
+	}
 
 	public void destroy(){
 		this.notificationManager.cancel(this.notificationID);

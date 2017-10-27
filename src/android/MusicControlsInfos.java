@@ -14,6 +14,8 @@ public class MusicControlsInfos{
 	public boolean hasNext;
 	public boolean hasClose;
 	public boolean dismissable;
+	public String playIcon;
+	public String pauseIcon;
 
 	public MusicControlsInfos(JSONArray args) throws JSONException {
 		final JSONObject params = args.getJSONObject(0);
@@ -27,6 +29,8 @@ public class MusicControlsInfos{
 		this.hasNext = params.getBoolean("hasNext");
 		this.hasClose = params.getBoolean("hasClose");
 		this.dismissable = params.getBoolean("dismissable");
+		this.playIcon = params.getString("playIcon");
+		this.pauseIcon = params.getString("pauseIcon");
 	}
 
 }

@@ -41,12 +41,14 @@ MusicControls.create({
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated
 	ticker	  : 'Now playing "Time is Running Out"',
-	playIcon: 'media_play', // optional, default: '', defaults to the android play icon
-	pauseIcon: 'media_pause', // optional, default: '', defaults to the android pause icon
-	prevIcon: 'media_prev', // optional, default: '', defaults to the android prev icon
-	nextIcon: 'media_next', // optional, default: '', defaults to the android next icon
-	closeIcon: 'media_close', // optional, default: '', defaults to the android clear/destroy icon
-	notificationIcon: 'notification' // optional, default: '', defaults to the play/pause icon
+	//All icons default to their built-in android equivalents
+	//The supplied drawable name, e.g. 'media_play', is the name of a drawable found under android/res/drawable* folders
+	playIcon: 'media_play',
+	pauseIcon: 'media_pause',
+	prevIcon: 'media_prev',
+	nextIcon: 'media_next',
+	closeIcon: 'media_close',
+	notificationIcon: 'notification'
 }, onSuccess, onError);
 ```
 

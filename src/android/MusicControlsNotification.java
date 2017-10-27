@@ -156,10 +156,21 @@ public class MusicControlsNotification {
 		}
 
 		//Set SmallIcon
-		if (infos.isPlaying){
-			builder.setSmallIcon(this.getResourceId(infos.playIcon, android.R.drawable.ic_media_play));
-		} else {
-			builder.setSmallIcon(this.getResourceId(infos.pauseIcon, android.R.drawable.ic_media_pause));
+		boolean usePlayingIcon = infos.notificationIcon.isEmpty();
+		if(!usePlayingIcon){
+			int resId = this.getResourceId(infos.notificationIcon, 0);
+			usePlayingIcon = resId == 0;
+			if(!usePlayingIcon) {
+				builder.setSmallIcon(resId);
+			}
+		}
+
+		if(usePlayingIcon){
+			if (infos.isPlaying){
+				builder.setSmallIcon(this.getResourceId(infos.playIcon, android.R.drawable.ic_media_play));
+			} else {
+				builder.setSmallIcon(this.getResourceId(infos.pauseIcon, android.R.drawable.ic_media_pause));
+			}
 		}
 
 		//Set LargeIcon
@@ -208,7 +219,7 @@ public class MusicControlsNotification {
 			nbControls++;
 			Intent destroyIntent = new Intent("music-controls-destroy");
 			PendingIntent destroyPendingIntent = PendingIntent.getBroadcast(context, 1, destroyIntent, 0);
-			builder.addAction(this.getResourceId(infos.destroyIcon, android.R.drawable.ic_menu_close_clear_cancel), "", destroyPendingIntent);
+			builder.addAction(this.getResourceId(infos.closeIcon, android.R.drawable.ic_menu_close_clear_cancel), "", destroyPendingIntent);
 		}
 
 		//If 5.0 >= use MediaStyle

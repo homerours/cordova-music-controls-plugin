@@ -22,7 +22,8 @@ var musicControls = {
     data.pauseIcon = !isUndefined(data.pauseIcon) ? data.pauseIcon : '';
     data.prevIcon = !isUndefined(data.prevIcon) ? data.prevIcon : '';
     data.nextIcon = !isUndefined(data.nextIcon) ? data.nextIcon : '';
-    data.destroyIcon = !isUndefined(data.destroyIcon) ? data.destroyIcon : '';
+    data.closeIcon = !isUndefined(data.closeIcon) ? data.closeIcon : '';
+    data.notificationIcon = !isUndefined(data.notificationIcon) ? data.notificationIcon : '';
 
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
   },

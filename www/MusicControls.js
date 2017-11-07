@@ -19,6 +19,12 @@ var musicControls = {
     data.skipBackwardInterval = !isUndefined(data.skipBackwardInterval) ? data.skipBackwardInterval : 0;
     data.hasClose = !isUndefined(data.hasClose) ? data.hasClose : false;
     data.dismissable = !isUndefined(data.dismissable) ? data.dismissable : false;
+    data.playIcon = !isUndefined(data.playIcon) ? data.playIcon : '';
+    data.pauseIcon = !isUndefined(data.pauseIcon) ? data.pauseIcon : '';
+    data.prevIcon = !isUndefined(data.prevIcon) ? data.prevIcon : '';
+    data.nextIcon = !isUndefined(data.nextIcon) ? data.nextIcon : '';
+    data.closeIcon = !isUndefined(data.closeIcon) ? data.closeIcon : '';
+    data.notificationIcon = !isUndefined(data.notificationIcon) ? data.notificationIcon : '';
 
     cordova.exec(successCallback, errorCallback, 'MusicControls', 'create', [data]);
   },

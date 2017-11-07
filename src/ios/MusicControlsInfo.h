@@ -18,15 +18,16 @@
 @property NSString * album;
 @property NSString * ticker;
 @property NSString * cover;
-@property int duration;
-@property int elapsed;
+@property NSUInteger duration;
+@property MSUInteger elapsed;
 @property bool isPlaying;
 @property bool hasPrev;
 @property bool hasNext;
 @property bool hasSkipForward;
 @property bool hasSkipBackward;
-@property int skipForwardInterval;
-@property int skipBackwardInterval;
+@property bool hasScrubbing;
+@property NSUInteger skipForwardInterval;
+@property NSUInteger skipBackwardInterval;
 @property bool dismissable;
 
 - (id) initWithDictionary: (NSDictionary *) dictionary;

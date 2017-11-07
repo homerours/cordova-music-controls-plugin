@@ -7,7 +7,7 @@ Music controls for Cordova applications. Display a 'media' notification with pla
 ## Supported platforms
 - Android (4.1+)
 - Windows (10+, by [filfat](https://github.com/filfat))
-- iOS (by [0505gonzalez](https://github.com/0505gonzalez))
+- iOS 8+ (by [0505gonzalez](https://github.com/0505gonzalez))
 
 ## Installation
 `cordova plugin add https://github.com/homerours/cordova-music-controls-plugin`
@@ -36,7 +36,8 @@ MusicControls.create({
   	hasSkipForward : true, //optional, default: false. true value overrides hasNext.
   	hasSkipBackward : true, //optional, default: false. true value overrides hasPrev.
   	skipForwardInterval : 15, //optional. default: 0.
-	skipBackwardInterval : 15, //optional. default: 0. 
+	skipBackwardInterval : 15, //optional. default: 0.
+	hasScrubbing : false, //optional. default to false. Enable scrubbing from control center progress bar 
 
 	// Android only, optional
 	// text displayed in the status bar when the notification (and the ticker) are updated

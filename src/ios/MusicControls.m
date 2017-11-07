@@ -47,6 +47,8 @@ MusicControlsInfo * musicControlsSettings;
         
         nowPlayingInfoCenter.nowPlayingInfo = updatedNowPlayingInfo;
     }];
+
+    [self registerMusicControlsEventListener];
 }
 
 - (void) updateIsPlaying: (CDVInvokedUrlCommand *) command {
@@ -79,7 +81,6 @@ MusicControlsInfo * musicControlsSettings;
 
 - (void) watch: (CDVInvokedUrlCommand *) command {
     [self setLatestEventCallbackId:command.callbackId];
-    [self registerMusicControlsEventListener];
 }
 
 - (MPMediaItemArtwork *) createCoverArtwork: (NSString *) coverUri {

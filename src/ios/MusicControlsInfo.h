@@ -19,7 +19,7 @@
 @property NSString * ticker;
 @property NSString * cover;
 @property NSUInteger duration;
-@property MSUInteger elapsed;
+@property NSUInteger elapsed;
 @property bool isPlaying;
 @property bool hasPrev;
 @property bool hasNext;

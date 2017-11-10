@@ -152,7 +152,6 @@ MusicControlsInfo * musicControlsSettings;
 //for those functions that we already deal with through notifications (play, pause, skip etc)
 //otherwise those remote control actions will be disabled
 - (void) remoteEvent:(MPRemoteCommandEvent *)event {
-    NSLog(@"%@", event);
     return;
 }
 

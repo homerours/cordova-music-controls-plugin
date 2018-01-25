@@ -104,7 +104,7 @@ MusicControlsInfo * musicControlsSettings;
         }
     }
     else if (![coverUri isEqual:@""]) {
-        NSString * baseCoverImagePath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString * baseCoverImagePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:@"/www/"];       
         NSString * fullCoverImagePath = [NSString stringWithFormat:@"%@%@", baseCoverImagePath, coverUri];
     
         if ([[NSFileManager defaultManager] fileExistsAtPath:fullCoverImagePath]) {

@@ -53,18 +53,21 @@ MusicControlsInfo * musicControlsSettings;
     
     [self.commandDelegate runInBackground:^{
         
-        MPMediaItemArtwork * mediaItemArtwork = [self createCoverArtwork:[musicControlsInfo cover]];
-        
-        if (mediaItemArtwork != nil ) {
-            UIImage *newImage = [[updatedNowPlayingInfo objectForKey:@"artwork"] imageWithSize:CGSizeMake(1, 1)];
-            UIImage *oldImage = [mediaItemArtwork imageWithSize:CGSizeMake(1, 1)];
-            if ([newImage isEqual:oldImage] == NO){
-                [updatedNowPlayingInfo setObject:mediaItemArtwork forKey:MPMediaItemPropertyArtwork];
+            MPMediaItemArtwork * mediaItemArtwork = [self createCoverArtwork:[musicControlsInfo cover]];
+    
+            if (mediaItemArtwork != nil ) {
+                UIImage *newImage = [[updatedNowPlayingInfo objectForKey:@"artwork"] imageWithSize:CGSizeMake(1, 1)];
+                UIImage *oldImage = [mediaItemArtwork imageWithSize:CGSizeMake(1, 1)];
+                NSData *data1 = UIImagePNGRepresentation(newImage);
+                NSData *data2 = UIImagePNGRepresentation(oldImage);
+                if ([data1 isEqual:data2] == NO){
+                    [updatedNowPlayingInfo setObject:mediaItemArtwork forKey:MPMediaItemPropertyArtwork];
+                    [nowPlayingInfoCenter setNowPlayingInfo:updatedNowPlayingInfo];
+                }
             }
-        }
-        [nowPlayingInfoCenter setNowPlayingInfo:updatedNowPlayingInfo] ;
         
-        
+    
+    
     }];
     [self registerMusicControlsEventListener];
 }

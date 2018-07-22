@@ -9,6 +9,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
+
 import android.util.Log;
 import android.app.Activity;
 import android.content.Context;
@@ -34,6 +38,60 @@ public class MusicControls extends CordovaPlugin {
 	private boolean mediaButtonAccess=true;
 
 
+	private MediaSessionCallback mMediaSessionCallback = new MediaSessionCallback();
+
+
+	public class MediaSessionCallback extends MediaSessionCompat.Callback {
+
+	    private CallbackContext cb;
+
+	    public void setCallback(CallbackContext cb){
+	      this.cb = cb;
+	    }
+
+	    @Override
+	    public void onPlay() {
+	      super.onPlay();
+	      if(this.cb != null) {
+		this.cb.success("{\"message\": \"music-controls-media-button-play\"}");
+		this.cb = null;
+	      }
+	    }
+
+	    @Override
+	    public void onPause() {
+	      super.onPause();
+	      if(this.cb != null) {
+		this.cb.success("{\"message\": \"music-controls-media-button-pause\"}");
+		this.cb = null;
+	      }
+	    }
+
+	    @Override
+	    public void onSkipToNext() {
+	      super.onSkipToNext();
+	      if(this.cb != null) {
+		this.cb.success("{\"message\": \"music-controls-media-button-next\"}");
+		this.cb = null;
+	      }
+	    }
+
+	    @Override
+	    public void onSkipToPrevious() {
+	      super.onSkipToPrevious();
+	      if(this.cb != null) {
+		this.cb.success("{\"message\": \"music-controls-media-button-previous\"}");
+		this.cb = null;
+	      }
+	    }
+
+	    @Override
+	    public void onPlayFromMediaId(String mediaId, Bundle extras) {
+	      super.onPlayFromMediaId(mediaId, extras);
+	    }
+	  }
+
+
 	private void registerBroadcaster(MusicControlsBroadcastReceiver mMessageReceiver){
 		final Context context = this.cordova.getActivity().getApplicationContext();
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-previous"));
@@ -49,15 +107,19 @@ public class MusicControls extends CordovaPlugin {
 
 	// Register pendingIntent for broacast
 	public void registerMediaButtonEvent(){
-		if (this.mediaButtonAccess && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
-			this.mAudioManager.registerMediaButtonEventReceiver(this.mediaButtonPendingIntent);
-		}
+
+		this.mediaSessionCompat.setMediaButtonReceiver(this.mediaButtonPendingIntent);
+
+		/*if (this.mediaButtonAccess && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
+		this.mAudioManager.registerMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+		}*/
 	}
 
 	public void unregisterMediaButtonEvent(){
-		if (this.mediaButtonAccess && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
-			this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
-		}
+		this.mediaSessionCompat.setMediaButtonReceiver(null);
+		/*if (this.mediaButtonAccess && android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR2){
+		this.mAudioManager.unregisterMediaButtonEventReceiver(this.mediaButtonPendingIntent);
+		}*/
 	}
 
 	public void destroyPlayerNotification(){
@@ -74,6 +136,16 @@ public class MusicControls extends CordovaPlugin {
 		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
 		this.registerBroadcaster(mMessageReceiver);
 
+		
+		this.mediaSessionCompat = new MediaSessionCompat(context, "cordova-music-controls-media-session", null, this.mediaButtonPendingIntent);
+		this.mediaSessionCompat.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
+
+		setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
+		this.mediaSessionCompat.setActive(true);
+
+		this.mediaSessionCompat.setCallback(this.mMediaSessionCallback);
+		
 		// Register media (headset) button event receiver
 		try {
 			this.mAudioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
@@ -105,6 +177,22 @@ public class MusicControls extends CordovaPlugin {
 
 		if (action.equals("create")) {
 			final MusicControlsInfos infos = new MusicControlsInfos(args);
+			 MediaMetadataCompat.Builder metadataBuilder = new MediaMetadataCompat.Builder();
+
+			// track title
+			metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_TITLE, infos.track);
+			// artists
+			metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, infos.artist);
+			//album
+			metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, infos.album);
+
+			this.mediaSessionCompat.setMetadata(metadataBuilder.build());
+
+			if(infos.isPlaying)
+				setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
+			else
+				setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
+			
 			this.cordova.getThreadPool().execute(new Runnable() {
 				public void run() {
 					notification.updateNotification(infos);
@@ -116,6 +204,12 @@ public class MusicControls extends CordovaPlugin {
 			final JSONObject params = args.getJSONObject(0);
 			final boolean isPlaying = params.getBoolean("isPlaying");
 			this.notification.updateIsPlaying(isPlaying);
+			
+			if(isPlaying)
+				setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
+			else
+				setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
+			
 			callbackContext.success("success");
 		}
 		else if (action.equals("updateDismissable")){
@@ -131,9 +225,10 @@ public class MusicControls extends CordovaPlugin {
 		}
 		else if (action.equals("watch")) {
 			this.registerMediaButtonEvent();
-			this.cordova.getThreadPool().execute(new Runnable() {
+      			this.cordova.getThreadPool().execute(new Runnable() {
 				public void run() {
-					mMessageReceiver.setCallback(callbackContext);
+          				mMediaSessionCallback.setCallback(callbackContext);
+					//mMessageReceiver.setCallback(callbackContext);
 				}
 			});
 		}
@@ -152,5 +247,20 @@ public class MusicControls extends CordovaPlugin {
 	public void onReset() {
 		onDestroy();
 		super.onReset();
+	}
+	private void setMediaPlaybackState(int state) {
+		PlaybackStateCompat.Builder playbackstateBuilder = new PlaybackStateCompat.Builder();
+		if( state == PlaybackStateCompat.STATE_PLAYING ) {
+			playbackstateBuilder.setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE | PlaybackStateCompat.ACTION_PAUSE | PlaybackStateCompat.ACTION_SKIP_TO_NEXT | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
+				PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID |
+				PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH);
+			playbackstateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, 1.0f);
+		} else {
+			playbackstateBuilder.setActions(PlaybackStateCompat.ACTION_PLAY_PAUSE | PlaybackStateCompat.ACTION_PLAY | PlaybackStateCompat.ACTION_SKIP_TO_NEXT | PlaybackStateCompat.ACTION_SKIP_TO_PREVIOUS |
+				PlaybackStateCompat.ACTION_PLAY_FROM_MEDIA_ID |
+				PlaybackStateCompat.ACTION_PLAY_FROM_SEARCH);
+			playbackstateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, 0);
+		}
+		this.mediaSessionCompat.setPlaybackState(playbackstateBuilder.build());
 	}
 }

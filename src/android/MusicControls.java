@@ -32,6 +32,7 @@ import android.media.AudioManager;
 public class MusicControls extends CordovaPlugin {
 	private MusicControlsBroadcastReceiver mMessageReceiver;
 	private MusicControlsNotification notification;
+	private MediaSessionCompat mediaSessionCompat;
 	private final int notificationID=7824;
 	private AudioManager mAudioManager;
 	private PendingIntent mediaButtonPendingIntent;

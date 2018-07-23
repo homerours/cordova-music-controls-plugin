@@ -42,57 +42,6 @@ public class MusicControls extends CordovaPlugin {
 	private MediaSessionCallback mMediaSessionCallback = new MediaSessionCallback();
 
 
-	public class MediaSessionCallback extends MediaSessionCompat.Callback {
-
-	    private CallbackContext cb;
-
-	    public void setCallback(CallbackContext cb){
-	      this.cb = cb;
-	    }
-
-	    @Override
-	    public void onPlay() {
-	      super.onPlay();
-	      if(this.cb != null) {
-		this.cb.success("{\"message\": \"music-controls-media-button-play\"}");
-		this.cb = null;
-	      }
-	    }
-
-	    @Override
-	    public void onPause() {
-	      super.onPause();
-	      if(this.cb != null) {
-		this.cb.success("{\"message\": \"music-controls-media-button-pause\"}");
-		this.cb = null;
-	      }
-	    }
-
-	    @Override
-	    public void onSkipToNext() {
-	      super.onSkipToNext();
-	      if(this.cb != null) {
-		this.cb.success("{\"message\": \"music-controls-media-button-next\"}");
-		this.cb = null;
-	      }
-	    }
-
-	    @Override
-	    public void onSkipToPrevious() {
-	      super.onSkipToPrevious();
-	      if(this.cb != null) {
-		this.cb.success("{\"message\": \"music-controls-media-button-previous\"}");
-		this.cb = null;
-	      }
-	    }
-
-	    @Override
-	    public void onPlayFromMediaId(String mediaId, Bundle extras) {
-	      super.onPlayFromMediaId(mediaId, extras);
-	    }
-	  }
-
-
 	private void registerBroadcaster(MusicControlsBroadcastReceiver mMessageReceiver){
 		final Context context = this.cordova.getActivity().getApplicationContext();
 		context.registerReceiver((BroadcastReceiver)mMessageReceiver, new IntentFilter("music-controls-previous"));
@@ -176,27 +125,37 @@ public class MusicControls extends CordovaPlugin {
 		final Context context=this.cordova.getActivity().getApplicationContext();
 		final Activity activity=this.cordova.getActivity();
 
+		
 		if (action.equals("create")) {
 			final MusicControlsInfos infos = new MusicControlsInfos(args);
 			 MediaMetadataCompat.Builder metadataBuilder = new MediaMetadataCompat.Builder();
 
-			// track title
-			metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_TITLE, infos.track);
-			// artists
-			metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, infos.artist);
-			//album
-			metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, infos.album);
 
-			this.mediaSessionCompat.setMetadata(metadataBuilder.build());
-
-			if(infos.isPlaying)
-				setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
-			else
-				setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
-			
 			this.cordova.getThreadPool().execute(new Runnable() {
 				public void run() {
 					notification.updateNotification(infos);
+					
+					// track title
+					metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_TITLE, infos.track);
+					// artists
+					metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ARTIST, infos.artist);
+					//album
+					metadataBuilder.putString(MediaMetadataCompat.METADATA_KEY_ALBUM, infos.album);
+
+					Bitmap art = getBitmapCover(infos.cover);
+					if(art != null){
+						metadataBuilder.putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, art);
+						metadataBuilder.putBitmap(MediaMetadataCompat.METADATA_KEY_ART, art);
+
+					}
+
+					this.mediaSessionCompat.setMetadata(metadataBuilder.build());
+
+					if(infos.isPlaying)
+						setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
+					else
+						setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
+					
 					callbackContext.success("success");
 				}
 			});
@@ -229,7 +188,7 @@ public class MusicControls extends CordovaPlugin {
       			this.cordova.getThreadPool().execute(new Runnable() {
 				public void run() {
           				mMediaSessionCallback.setCallback(callbackContext);
-					//mMessageReceiver.setCallback(callbackContext);
+					mMessageReceiver.setCallback(callbackContext);
 				}
 			});
 		}
@@ -263,5 +222,62 @@ public class MusicControls extends CordovaPlugin {
 			playbackstateBuilder.setState(state, PlaybackStateCompat.PLAYBACK_POSITION_UNKNOWN, 0);
 		}
 		this.mediaSessionCompat.setPlaybackState(playbackstateBuilder.build());
+	}
+	
+	// Get image from url
+	private Bitmap getBitmapCover(String coverURL){
+		try{
+			if(coverURL.matches("^(https?|ftp)://.*$"))
+				// Remote image
+				return getBitmapFromURL(coverURL);
+			else {
+				// Local image
+				return getBitmapFromLocal(coverURL);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	}
+
+	// get Local image
+	private Bitmap getBitmapFromLocal(String localURL){
+		try {
+			Uri uri = Uri.parse(localURL);
+			File file = new File(uri.getPath());
+			FileInputStream fileStream = new FileInputStream(file);
+			BufferedInputStream buf = new BufferedInputStream(fileStream);
+			Bitmap myBitmap = BitmapFactory.decodeStream(buf);
+			buf.close();
+			return myBitmap;
+		} catch (Exception ex) {
+			try {
+				InputStream fileStream = cordovaActivity.getAssets().open("www/" + localURL);
+				BufferedInputStream buf = new BufferedInputStream(fileStream);
+				Bitmap myBitmap = BitmapFactory.decodeStream(buf);
+				buf.close();
+				return myBitmap;
+			} catch (Exception ex2) {
+				ex.printStackTrace();
+				ex2.printStackTrace();
+				return null;
+			}
+		}
+	}
+
+	// get Remote image
+	private Bitmap getBitmapFromURL(String strURL) {
+		try {
+			URL url = new URL(strURL);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.setDoInput(true);
+			connection.connect();
+			InputStream input = connection.getInputStream();
+			Bitmap myBitmap = BitmapFactory.decodeStream(input);
+			return myBitmap;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 	}
 }

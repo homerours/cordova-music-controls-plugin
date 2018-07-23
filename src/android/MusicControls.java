@@ -9,6 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -29,6 +32,13 @@ import android.R;
 import android.content.BroadcastReceiver;
 import android.media.AudioManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class MusicControls extends CordovaPlugin {
 	private MusicControlsBroadcastReceiver mMessageReceiver;
 	private MusicControlsNotification notification;
@@ -38,6 +48,7 @@ public class MusicControls extends CordovaPlugin {
 	private PendingIntent mediaButtonPendingIntent;
 	private boolean mediaButtonAccess=true;
 
+  	private Activity cordovaActivity;
 
 	private MediaSessionCallback mMediaSessionCallback = new MediaSessionCallback();
 
@@ -81,6 +92,8 @@ public class MusicControls extends CordovaPlugin {
 		super.initialize(cordova, webView);
 		final Activity activity = this.cordova.getActivity();
 		final Context context=activity.getApplicationContext();
+
+    		this.cordovaActivity = activity;
 
 		this.notification = new MusicControlsNotification(activity,this.notificationID);
 		this.mMessageReceiver = new MusicControlsBroadcastReceiver(this);
@@ -128,7 +141,7 @@ public class MusicControls extends CordovaPlugin {
 		
 		if (action.equals("create")) {
 			final MusicControlsInfos infos = new MusicControlsInfos(args);
-			 MediaMetadataCompat.Builder metadataBuilder = new MediaMetadataCompat.Builder();
+			 final MediaMetadataCompat.Builder metadataBuilder = new MediaMetadataCompat.Builder();
 
 
 			this.cordova.getThreadPool().execute(new Runnable() {
@@ -149,13 +162,13 @@ public class MusicControls extends CordovaPlugin {
 
 					}
 
-					this.mediaSessionCompat.setMetadata(metadataBuilder.build());
+					mediaSessionCompat.setMetadata(metadataBuilder.build());
 
 					if(infos.isPlaying)
 						setMediaPlaybackState(PlaybackStateCompat.STATE_PLAYING);
 					else
 						setMediaPlaybackState(PlaybackStateCompat.STATE_PAUSED);
-					
+
 					callbackContext.success("success");
 				}
 			});

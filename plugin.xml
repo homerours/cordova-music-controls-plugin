@@ -36,6 +36,7 @@
 		</config-file>
 
 		<source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />
+		<source-file src="src/android/MediaSessionCallback.java" target-dir="src/com/homerours/musiccontrols" />
 		<source-file src="src/android/MusicControlsBroadcastReceiver.java" target-dir="src/com/homerours/musiccontrols" />
 		<source-file src="src/android/MusicControlsNotification.java" target-dir="src/com/homerours/musiccontrols" />
 		<source-file src="src/android/MusicControlsNotificationKiller.java" target-dir="src/com/homerours/musiccontrols" />

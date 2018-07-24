@@ -16,9 +16,10 @@ Music controls for Cordova applications. Display a 'media' notification with pla
 - Create the media controls:
 ```javascript
 MusicControls.create({
-    track       : 'Time is Running Out',		// optional, default : ''
+	track       : 'Time is Running Out',		// optional, default : ''
 	artist      : 'Muse',						// optional, default : ''
-    cover       : 'albums/absolution.jpg',		// optional, default : nothing
+	album       : 'Absolution',     // optional, default: ''
+ 	cover       : 'albums/absolution.jpg',		// optional, default : nothing
 	// cover can be a local path (use fullpath 'file:///storage/emulated/...', or only 'my_image.jpg' if my_image.jpg is in the www folder of your app)
 	//			 or a remote url ('http://...', 'https://...', 'ftp://...')
 	isPlaying   : true,							// optional, default : true
@@ -30,7 +31,7 @@ MusicControls.create({
 	hasClose  : true,		// show close button, optional, default: false
 
 	// iOS only, optional
-	album       : 'Absolution',     // optional, default: ''
+	
 	duration : 60, // optional, default: 0
 	elapsed : 10, // optional, default: 0
   	hasSkipForward : true, //optional, default: false. true value overrides hasNext.

@@ -263,7 +263,7 @@ MusicControlsInfo * musicControlsSettings;
             [commandCenter.skipForwardCommand addTarget: self action:@selector(skipForwardEvent:)];
         }
         if(musicControlsSettings.hasSkipBackward){
-            commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
+            commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
             [commandCenter.skipBackwardCommand setEnabled:true];
             [commandCenter.skipBackwardCommand addTarget: self action:@selector(skipBackwardEvent:)];
         }

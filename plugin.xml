@@ -35,6 +35,8 @@
 			<service android:name="com.homerours.musiccontrols.MusicControlsNotificationKiller"></service>
 		</config-file>
 
+		<framework src="com.android.support:support-v4:25.1.1" />
+		
 		<source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />
 		<source-file src="src/android/MediaSessionCallback.java" target-dir="src/com/homerours/musiccontrols" />
 		<source-file src="src/android/MusicControlsBroadcastReceiver.java" target-dir="src/com/homerours/musiccontrols" />

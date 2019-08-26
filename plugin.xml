@@ -33,6 +33,11 @@
 
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<service android:name="com.homerours.musiccontrols.MusicControlsNotificationKiller"></service>
+			<receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
+				<intent-filter>
+					<action android:name="android.intent.action.MEDIA_BUTTON" />
+				</intent-filter>
+			</receiver>
 		</config-file>
 
 		<source-file src="src/android/MusicControls.java" target-dir="src/com/homerours/musiccontrols" />

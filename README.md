@@ -1,3 +1,9 @@
+# No longer maintained.
+
+Gavin Henry ([ghenry22](https://github.com/ghenry22)) has been maintaining a fork that should be updated and working better than this one. Please use his fork.
+
+https://github.com/ghenry22/cordova-music-controls-plugin
+
 # Cordova Music Controls Plugin
 
 <img src='https://imgur.com/fh3ACOq.png' width='564' height='342'>

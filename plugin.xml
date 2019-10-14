@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android"
-	id="cordova-plugin-music-controls"
-	version="2.2.0">
+	id="cordova-music-controls"
+	version="2.2.1">
 	<name>MusicControls</name>
 	<keywords>cordova,music,controller,controls,media,plugin,notification,lockscreen,now,playing</keywords>
-	<repo>https://github.com/homerours/cordova-music-controls-plugin</repo>
+	<repo>https://github.com/yoojene/cordova-music-controls</repo>
 	<description>Music controls for Cordova apps</description>
 	<license>MIT</license>
 	<author>HomerOurs</author>

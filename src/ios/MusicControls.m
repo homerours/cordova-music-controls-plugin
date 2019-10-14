@@ -132,19 +132,21 @@ MusicControlsInfo * musicControlsSettings;
 }
 
 //Handle the skip forward event
-- (void) skipForwardEvent:(MPSkipIntervalCommandEvent *)event {
+- (MPRemoteCommandHandlerStatus) skipForwardEvent:(MPSkipIntervalCommandEvent *)event {
     NSString * action = @"music-controls-skip-forward";
     NSString * jsonAction = [NSString stringWithFormat:@"{\"message\":\"%@\"}", action];
     CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonAction];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:[self latestEventCallbackId]];
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
 //Handle the skip backward event
-- (void) skipBackwardEvent:(MPSkipIntervalCommandEvent *)event {
+- (MPRemoteCommandHandlerStatus) skipBackwardEvent:(MPSkipIntervalCommandEvent *)event {
     NSString * action = @"music-controls-skip-backward";
     NSString * jsonAction = [NSString stringWithFormat:@"{\"message\":\"%@\"}", action];
     CDVPluginResult * pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:jsonAction];
     [self.commandDelegate sendPluginResult:pluginResult callbackId:[self latestEventCallbackId]];
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
 //If MPRemoteCommandCenter is enabled for any function we must enable it for all and register a handler

@@ -4,6 +4,7 @@
 //
 //  Created by Juan Gonzalez on 12/16/16.
 //  Updated by Gaven Henry on 11/7/17 for iOS 11 compatibility & new features
+//  Updated by Eugene Cross on 14/12/19 for iOS 13 compatibility
 //
 //
 

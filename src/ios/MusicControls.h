@@ -3,6 +3,7 @@
 // Music Controls Cordova Plugin
 //
 // Created by Juan Gonzalez on 12/16/16.
+// Updated by Eugene Cross on 14/12/19 for iOS 13 compatibility
 //
 
 #ifndef MusicControls_h

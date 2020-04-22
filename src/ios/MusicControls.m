@@ -23,31 +23,52 @@ MusicControlsInfo * musicControlsSettings;
     if (!NSClassFromString(@"MPNowPlayingInfoCenter")) {
         return;
     }
+    MPNowPlayingInfoCenter * nowPlayingInfoCenter =  [MPNowPlayingInfoCenter defaultCenter];
+    NSDictionary * nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo;
+    NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingInfo];
+    
+    NSNumber * duration = [NSNumber numberWithInt:[musicControlsInfo duration]];
+    NSNumber * elapsed = [NSNumber numberWithInt:[musicControlsInfo elapsed]];
+    NSNumber * playbackRate = [NSNumber numberWithBool:[musicControlsInfo isPlaying]];
+    
+    
+    [updatedNowPlayingInfo setObject:[musicControlsInfo artist] forKey:MPMediaItemPropertyArtist];
+    [updatedNowPlayingInfo setObject:[musicControlsInfo track] forKey:MPMediaItemPropertyTitle];
+    [updatedNowPlayingInfo setObject:[musicControlsInfo album] forKey:MPMediaItemPropertyAlbumTitle];
+    [updatedNowPlayingInfo setObject:duration forKey:MPMediaItemPropertyPlaybackDuration];
+    [updatedNowPlayingInfo setObject:elapsed forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+    [updatedNowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
+    
+    if (@available(iOS 11.0, *)) {
+        if ([musicControlsInfo isPlaying]){
+            [nowPlayingInfoCenter setPlaybackState:MPNowPlayingPlaybackStatePlaying];
+            
+        }else{
+            [nowPlayingInfoCenter setPlaybackState:MPNowPlayingPlaybackStatePaused];
+            
+        }
+    }
+    
+    [nowPlayingInfoCenter setNowPlayingInfo:updatedNowPlayingInfo];
     
     [self.commandDelegate runInBackground:^{
-        MPNowPlayingInfoCenter * nowPlayingInfoCenter =  [MPNowPlayingInfoCenter defaultCenter];
-        NSDictionary * nowPlayingInfo = nowPlayingInfoCenter.nowPlayingInfo;
-        NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingInfo];
         
-        MPMediaItemArtwork * mediaItemArtwork = [self createCoverArtwork:[musicControlsInfo cover]];
-        NSNumber * duration = [NSNumber numberWithInt:[musicControlsInfo duration]];
-        NSNumber * elapsed = [NSNumber numberWithInt:[musicControlsInfo elapsed]];
-        NSNumber * playbackRate = [NSNumber numberWithBool:[musicControlsInfo isPlaying]];
+            MPMediaItemArtwork * mediaItemArtwork = [self createCoverArtwork:[musicControlsInfo cover]];
+    
+            if (mediaItemArtwork != nil ) {
+                UIImage *newImage = [[updatedNowPlayingInfo objectForKey:@"artwork"] imageWithSize:CGSizeMake(1, 1)];
+                UIImage *oldImage = [mediaItemArtwork imageWithSize:CGSizeMake(1, 1)];
+                NSData *data1 = UIImagePNGRepresentation(newImage);
+                NSData *data2 = UIImagePNGRepresentation(oldImage);
+                if ([data1 isEqual:data2] == NO){
+                    [updatedNowPlayingInfo setObject:mediaItemArtwork forKey:MPMediaItemPropertyArtwork];
+                    [nowPlayingInfoCenter setNowPlayingInfo:updatedNowPlayingInfo];
+                }
+            }
         
-        if (mediaItemArtwork != nil) {
-            [updatedNowPlayingInfo setObject:mediaItemArtwork forKey:MPMediaItemPropertyArtwork];
-        }
-        
-        [updatedNowPlayingInfo setObject:[musicControlsInfo artist] forKey:MPMediaItemPropertyArtist];
-        [updatedNowPlayingInfo setObject:[musicControlsInfo track] forKey:MPMediaItemPropertyTitle];
-        [updatedNowPlayingInfo setObject:[musicControlsInfo album] forKey:MPMediaItemPropertyAlbumTitle];
-        [updatedNowPlayingInfo setObject:duration forKey:MPMediaItemPropertyPlaybackDuration];
-        [updatedNowPlayingInfo setObject:elapsed forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
-        [updatedNowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
-        
-        nowPlayingInfoCenter.nowPlayingInfo = updatedNowPlayingInfo;
+    
+    
     }];
-
     [self registerMusicControlsEventListener];
 }
 
@@ -63,7 +84,15 @@ MusicControlsInfo * musicControlsSettings;
 
     MPNowPlayingInfoCenter * nowPlayingCenter = [MPNowPlayingInfoCenter defaultCenter];
     NSMutableDictionary * updatedNowPlayingInfo = [NSMutableDictionary dictionaryWithDictionary:nowPlayingCenter.nowPlayingInfo];
-    
+    if (@available(iOS 11.0, *)) {
+        if ([musicControlsInfo isPlaying]){
+            [nowPlayingCenter setPlaybackState:MPNowPlayingPlaybackStatePlaying];
+            
+        }else{
+            [nowPlayingCenter setPlaybackState:MPNowPlayingPlaybackStatePaused];
+            
+        }
+    }
     [updatedNowPlayingInfo setObject:elapsed forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
     [updatedNowPlayingInfo setObject:playbackRate forKey:MPNowPlayingInfoPropertyPlaybackRate];
     nowPlayingCenter.nowPlayingInfo = updatedNowPlayingInfo;
@@ -193,7 +222,7 @@ MusicControlsInfo * musicControlsSettings;
     
     if (receivedEvent.type == UIEventTypeRemoteControl) {
         NSString * action;
-        
+
         switch (receivedEvent.subtype) {
             case UIEventSubtypeRemoteControlTogglePlayPause:
                 action = @"music-controls-toggle-play-pause";

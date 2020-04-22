@@ -261,15 +261,28 @@ MusicControlsInfo * musicControlsSettings;
             commandCenter.skipForwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
             [commandCenter.skipForwardCommand setEnabled:true];
             [commandCenter.skipForwardCommand addTarget: self action:@selector(skipForwardEvent:)];
+        } else {
+            if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+                [commandCenter.skipForwardCommand removeTarget:self];
+            }
         }
         if(musicControlsSettings.hasSkipBackward){
-            commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipForwardInterval)];
+            commandCenter.skipBackwardCommand.preferredIntervals = @[@(musicControlsSettings.skipBackwardInterval)];
             [commandCenter.skipBackwardCommand setEnabled:true];
             [commandCenter.skipBackwardCommand addTarget: self action:@selector(skipBackwardEvent:)];
+        } else {
+            if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+                [commandCenter.skipBackwardCommand removeTarget:self];
+            }
         }
         if(musicControlsSettings.hasScrubbing){
             [commandCenter.changePlaybackPositionCommand setEnabled:true];
             [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(changedThumbSliderOnLockScreen:)];
+        } else {
+            if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_9_0) {
+                [commandCenter.changePlaybackPositionCommand setEnabled:false];
+                [commandCenter.changePlaybackPositionCommand removeTarget:self action:NULL];
+            }
         }
     }
 }
